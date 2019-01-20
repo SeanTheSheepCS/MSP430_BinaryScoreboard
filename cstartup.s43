@@ -255,6 +255,7 @@ clock_setup
 ; Switch main clock to LFXT1 and turn off DCO
   BIS.B	  #11001000b, &BCSCTL2_	      ; MCLK and SMCLK are LFXT1CLK
 	BIS.B	  #SCG0 + SCG1, SR				    ; Turn off DCO and SMCLK
+  NOP                                 ;
 
 gpio_setup
 ; Setup I/O per the following:
