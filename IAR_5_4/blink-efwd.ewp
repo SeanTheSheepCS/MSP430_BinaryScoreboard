@@ -317,7 +317,7 @@
         </option>
         <option>
           <name>newCCIncludePaths</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -610,7 +610,7 @@
         </option>
         <option>
           <name>AUserIncludes</name>
-          <state></state>
+          <state>$PROJ_DIR$\..\</state>
         </option>
         <option>
           <name>ACPUTAG</name>
@@ -718,7 +718,7 @@
         </option>
         <option>
           <name>XclFile</name>
-          <state>$PROJ_DIR$\lnk430F2122_BLINK.xcl</state>
+          <state>$PROJ_DIR$\..\lnk430F2122_BLINK.xcl</state>
         </option>
         <option>
           <name>XclFileSlave</name>
@@ -1967,28 +1967,28 @@
     </settings>
   </configuration>
   <file>
-    <name>$PROJ_DIR$\blink-efwd-01.c</name>
+    <name>$PROJ_DIR$\..\blink-efwd-01.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\blink-efwd-01.h</name>
+    <name>$PROJ_DIR$\..\blink-efwd-01.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\cstartup.s43</name>
+    <name>$PROJ_DIR$\..\cstartup.s43</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\io430x21x2.h</name>
+    <name>$PROJ_DIR$\..\io430x21x2.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\main.c</name>
+    <name>$PROJ_DIR$\..\main.c</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\main.h</name>
+    <name>$PROJ_DIR$\..\main.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\msp430x21x2.h</name>
+    <name>$PROJ_DIR$\..\msp430x21x2.h</name>
   </file>
   <file>
-    <name>$PROJ_DIR$\typedef_MSP430.h</name>
+    <name>$PROJ_DIR$\..\typedef_MSP430.h</name>
   </file>
 </project>
 

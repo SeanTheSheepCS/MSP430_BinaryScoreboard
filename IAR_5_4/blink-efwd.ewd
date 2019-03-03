@@ -203,7 +203,7 @@
         </option>
         <option>
           <name>CRadioProtocolType</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>CCRadioModuleTypeSlave</name>
@@ -268,7 +268,7 @@
         </option>
         <option>
           <name>CRadioAutoManualType</name>
-          <state>1</state>
+          <state>0</state>
         </option>
         <option>
           <name>ExternalCodeDownload</name>
