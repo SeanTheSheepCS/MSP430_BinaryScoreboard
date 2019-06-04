@@ -32,7 +32,7 @@ YYYY-MM-DD  Checksum  Comments
 
 /************************ External Program Globals ****************************/
 /* Globally available variables from other files as indicated */
-extern fnCode_type BlinkStateMachine;                 /* From blink-efwd-01.c */
+extern fnCode_type CounterStateMachine;                 /* From blink-efwd-01.c */
 extern fnCode_type G_fCurrentStateMachine;            /* From blink-efwd-01.c */
 extern fnCode_type G_pfPatterns[];                    /* From blink-efwd-01.c */
  
@@ -60,15 +60,15 @@ int main(void)
 
   while(1)
   {
-	  BlinkStateMachine();
+	  CounterStateMachine();
   } 
   
 } /* end main */
 
 
 /************************ Interrupt Service Routines ****************************/
-#pragma vector = PORT1_VECTOR
-__interrupt void Port1ISR(void)
+#pragma vector = PORT2_VECTOR
+__interrupt void Port2ISR(void)
 /* Handles waking up from low power mode via a button press and returns with processor awake */
 {
   /* Debounce the button press for 10 ms -- not a great idea in an ISR but ok for a hack */
@@ -76,20 +76,20 @@ __interrupt void Port1ISR(void)
   for(u16 i = 0; i < 120; i++);
   
   /* If button is still down, consider it a valid press */
-  if( !(P1IN & P1_0_BUTTON) )
+  if( !(P2IN & P2_6_BUTTON_1) )
   {
-    /* Advance to the next pattern */
-    G_u8ActivePattern++;
-    if(G_u8ActivePattern == TOTAL_PATTERNS)
-    {
-      G_u8ActivePattern = 0;
-    }
-
-    G_fCurrentStateMachine = G_pfPatterns[G_u8ActivePattern];
+    //DO A THING
+    //G_fCurrentStateMachine = ??? 
+  }
+  else if( !(P2IN &  P2_7_BUTTON_0) )
+  {
+    //DO A THING
+    //G_fCurrentStateMachine = ??? 
   }
  
   /* Clear the flag, but keep the interrupt active */
-  P1IFG &= ~P1_0_BUTTON;
+  P2IFG &= ~P2_6_BUTTON_1;
+  P2IFG &= ~P2_7_BUTTON_0;
   
   //u8GlobalCurrentSleepInterval = SLEEP_TIME;
   //u8GlobalSleepCounter = 1;

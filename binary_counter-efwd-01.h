@@ -30,6 +30,15 @@ Constants
 #define LEDS_FOR_SCORE      (u8)6
 #define LEDS_FOR_LIVES      (u8)3
 
+#define SCORE_LED1                (u8)0
+#define SCORE_LED2                (u8)1
+#define SCORE_LED3                (u8)2
+#define SCORE_LED4                (u8)3
+#define SCORE_LED5                (u8)4
+#define SCORE_LED6                (u8)5
+#define LIFE_LED1                 (u8)6
+#define LIFE_LED2                 (u8)7
+#define LIFE_LED3                 (u8)8
 
 /****************************************************************************************
 Hardware Definitions
@@ -93,9 +102,13 @@ Hardware Definitions
 
 /************************ Function Declarations ****************************/
 void CounterSM_Initialize();
-
-void TestCounter();
 void SetTimer(u16 u16Taccr0_);
+
+/****************** Functions For The Campers To Fill **********************/
+void turnAllScoreLedsOff();
+void turnAllLifeLedsOn();
+void decrementLivesByOne();
+void incrementScoreByOne();
 
 /****************************************************************************************
 State Machine Functions
@@ -103,6 +116,7 @@ State Machine Functions
 void CounterSM_GameOver();                 /* The state the counter enters if the gameover signal is a one */
 void CounterSM_Score();                    /* The state the counter enters if the score signal is a one */
 void CounterSM_Idle();                     /* The state the counter enters if nothing of note has recently happened */
+void CounterSM_ResetButtonPressed();       /* The state the counter enters if the reset button is pressed */
 
 void CounterSM_Sleep();                    /* Determines which mode of sleep to enter and sleep */
 

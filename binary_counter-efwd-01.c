@@ -14,6 +14,7 @@ YYYY-MM-DD  Comments
 #include "intrinsics.h"
 #include "binary_counter-efwd-01.h"
 #include "main.h"
+#include "leds.h"
 
 /******************** External Globals ************************/
 /* Globally available variables from other files as indicated */
@@ -28,18 +29,24 @@ volatile u16 u16GlobalRuntimeFlags = 0;               /* Flag register for commu
 volatile u16 u16GlobalErrorFlags = 0;                 /* Flag register for communicating errors. */
 
 volatile u16 u16GlobalCurrentSleepInterval;           /* Duration that the device will sleep */
-//volatile u16 u16GlobalSleepCounter;                   /* Active sleep cycle counter */
-
-
 
 /******************** Local Globals ************************/
 /* Global variable definitions intended only for the scope of this file */
 
-u8 LG_u8ScoreLeds[]                        = {P2_4_LED1,    P1_0_LED2,    P1_1_LED3,    P1_2_LED4,    P1_3_LED5,    P3_2_LED6};
-u16*  LG_pu16ScoreLedPorts[LEDS_FOR_SCORE] = {(u16*)0x0029, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0019};
+u8 LG_u8ScoreLedIdentifiers[LEDS_FOR_SCORE]   = {P2_4_LED1,    P1_0_LED2,    P1_1_LED3,    P1_2_LED4,    P1_3_LED5,    P3_2_LED6};
+u16*  LG_pu16ScoreLedPorts[LEDS_FOR_SCORE]    = {(u16*)0x0029, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0019};
+LedInformation LG_u8ScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_4_LED1},
+                                                 {(u16*)0x0021, P1_0_LED2},
+                                                 {(u16*)0x0021, P1_1_LED3},
+                                                 {(u16*)0x0021, P1_2_LED4},
+                                                 {(u16*)0x0021, P1_3_LED5},
+                                                 {(u16*)0x0019, P3_2_LED6}};
 
-u8 LG_u8LifeLeds[]                        = {P3_1_LED7,    P3_0_LED8,    P2_2_LED9};
-u16*  LG_pu16LifeLedPorts[LEDS_FOR_LIVES] = {(u16*)0x0019, (u16*)0x0019, (u16*)0x0029};
+u8 LG_u8LifeLedIdentifiers[LEDS_FOR_LIVES]   = {P3_1_LED7,    P3_0_LED8,    P2_2_LED9};
+u16*  LG_pu16LifeLedPorts[LEDS_FOR_LIVES]    = {(u16*)0x0019, (u16*)0x0019, (u16*)0x0029};
+LedInformation LG_u8LifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0019, P3_1_LED7},
+                                                {(u16*)0x0019, P3_0_LED8},
+                                                {(u16*)0x0029, P2_2_LED9}};
 
 u8  LG_u8ActiveIndex  = 0;
 
@@ -53,7 +60,7 @@ Non-returning brute force function to blink LED
 Speed depends on clock and delay cycles in the loop.
  
 Requires:
-  - Active-high LED on Port 1 with the label defined as LED1 
+  - Active-high LED on Port 1 with the label defined as LED2 
 
 Promises:
   - Port 1 LED pin toggled at x Hz, thus an LED will blink at x/2 Hz.
@@ -64,7 +71,7 @@ void TestBlink()
 	while(1)
   {
 	  for(u16 i = 5000; i != 0; i--); 	/* 6 cycle loop */
-    P2OUT ^= P2_2_LED4; 	/* Takes 5 instruction cycles */	
+    P1OUT ^= P1_0_LED2; 	/* Takes 5 instruction cycles */	
 	} 
 } /* end TestBlink */
 
@@ -97,68 +104,24 @@ void SetTimer(u16 usTaccr0_)
 /****************************************************************************************
 State Machine Functions
 ****************************************************************************************/
-void BlinkSM_Initialize()
+void CounterSM_Initialize()
 {
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
     
   /* Allow a button interrupt and timer to wake up sleep */
-  P1IFG &= ~P1_0_BUTTON;
-  P1IE |= P1_0_BUTTON;				
+  P2IFG &= ~P2_6_BUTTON_1;
+  P2IE |= P2_6_BUTTON_1;	
+  P2IFG &= ~P2_7_BUTTON_0;
+  P2IE |= P2_7_BUTTON_0;	
   TACTL = TIMERA_INT_ENABLE;
        
-  BlinkStateMachine = BlinkSM_Sleep;
+  CounterStateMachine = CounterSM_Sleep;
   
-} /* end BlinkSM_Initialize */
-
+} /* end CounterSM_Initialize */
 
 /*----------------------------------------------------------------------------*/
-void ClockwiseSetup()
-{
-  P1OUT &= ~(P1_2_LED1 | P1_1_LED5 | P1_3_LED8);
-  P2OUT &= ~(P2_2_LED4);
-  P3OUT &= ~(P3_0_LED7 | P3_1_LED3 | P3_2_LED6 | P3_6_LED2);
-  
-  LG_u8ActiveIndex = 0;
-  u16GlobalCurrentSleepInterval = TIME_125MS;
-  G_fCurrentStateMachine = BlinkSM_Clockwise;
-  BlinkStateMachine = BlinkSM_Clockwise; 
-
-} /* end ClockwiseSetup() */
-
-  
-/*----------------------------------------------------------------------------*/
-void BlinkSM_Clockwise()
-{
-  for(u8 i = 0; i < TOTAL_LEDS; i++)
-  {
-    /* Turn the current active light on */
-    if(i == LG_u8ActiveIndex)
-    {
-      *LG_pu16LedPorts[i] |= LG_u8Leds[i];
-    }
-    /* Otherwise turn the LED off */
-    else
-    {
-      *LG_pu16LedPorts[i] &= ~LG_u8Leds[i];
-    }
-  }
-  
-  /* Increment and wrap the index pointer */
-  LG_u8ActiveIndex++;
-  if(LG_u8ActiveIndex == TOTAL_LEDS)
-  {
-    LG_u8ActiveIndex = 0;
-  }
-  
-  BlinkStateMachine = BlinkSM_Sleep;
-
-    
-} /* end BlinkSM_Clockwise() */
-
-
-/*----------------------------------------------------------------------------*/
-void BlinkSM_On()
+void CounterSM_GameOver()
 {
   for(u8 i = 0; i < TOTAL_LEDS; i++)
   {
@@ -167,14 +130,14 @@ void BlinkSM_On()
   
   /* Sleep for max time (or could disable sleep timer interrupt */
   u16GlobalCurrentSleepInterval = TIME_MAX;
-  BlinkStateMachine = BlinkSM_Sleep;
+  CounterStateMachine = CounterSM_Sleep;
 
     
-} /* end BlinkSM_On() */
+} /* end CounterSM_GameOver() */
 
 
 /*----------------------------------------------------------------------------*/
-void BlinkSM_Off()
+void CounterSM_Score()
 {
   for(u8 i = 0; i < TOTAL_LEDS; i++)
   {
@@ -183,14 +146,14 @@ void BlinkSM_Off()
   
   /* Sleep for max time (or could disable sleep timer interrupt */
   u16GlobalCurrentSleepInterval = TIME_MAX;
-  BlinkStateMachine = BlinkSM_Sleep;
+  CounterStateMachine = CounterSM_Sleep;
 
     
-} /* end BlinkSM_Off() */
+} /* end CounterSM_Score() */
 
  
 /*----------------------------------------------------------------------------*/
-void BlinkSM_Pulse()
+void CounterSM_Idle()
 {
   static bool bCurrentlyOn = FALSE;
   
@@ -215,9 +178,9 @@ void BlinkSM_Pulse()
     u16GlobalCurrentSleepInterval = TIME_125MS;
   }
 
-  BlinkStateMachine = BlinkSM_Sleep;
+  CounterStateMachine = CounterSM_Sleep;
   
-} /* end BlinkSM_Pulse() */
+} /* end CounterSM_Idle() */
 
 
 #if 0
@@ -247,7 +210,7 @@ void BlinkSM_ButtonCheck()
 #endif
 
 /*----------------------------------------------------------------------------*/
-void BlinkSM_Sleep()
+void CounterSM_Sleep()
 {
   /* Update to the current sleep interval and re-enable the timer interrupt */
   SetTimer(u16GlobalCurrentSleepInterval);
@@ -257,8 +220,84 @@ void BlinkSM_Sleep()
   __bis_SR_register(CPUOFF);
      
   /* Wake up (timer interrupt is off now from ISR) and go to next state */
-  BlinkStateMachine = G_fCurrentStateMachine;
+  CounterStateMachine = G_fCurrentStateMachine;
 
-} /* end BlinkSM_Sleep */
+} /* end CounterSM_Sleep */
 
-      
+void CounterSM_ResetButtonPressed()
+{
+  turnAllScoreLedsOff();
+  turnAllLifeLedsOn();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*-----------------------------------------------------------------------------
+
+HERE BEGINS THE CODE THAT THE CAMPERS WILL WRITE.
+The campers will implement each of these functions and then bring it to the leader to be inspected and run on the board.
+Solutions are provided here.
+
+-----------------------------------------------------------------------------*/
+
+
+
+
+void turnAllScoreLedsOff()
+{
+  for(int i = 0; i < LEDS_FOR_SCORE; i++)
+  {
+    LedOff(LG_u8ScoreLeds[i]);
+  }
+}
+
+void turnAllLifeLedsOn()
+{
+  for(int i = 0; i < LEDS_FOR_LIVES; i++)
+  {
+    LedOn(LG_u8LifeLeds[i]);
+  }
+}
+
+void decrementLivesByOne()
+{
+  for(int i = LEDS_FOR_LIVES-1; i >= 0; i--)
+  {
+    if(isLedOn(LG_u8LifeLeds[i]))
+    {
+      LedOff(LG_u8LifeLeds[i]);
+      break;
+    }
+    else if(i == 0)
+    {
+      CounterStateMachine = CounterSM_GameOver;
+    }
+  }
+}
+
+void incrementScoreByOne()
+{
+  for(int i = 0; i < LEDS_FOR_SCORE; i++)
+  {
+    if(isLedOff(LG_u8ScoreLeds[i]))
+    {
+      LedOn(LG_u8ScoreLeds[i]);
+      break;
+    }
+    else
+    {
+      LedOff(LG_u8ScoreLeds[i]);
+    }
+  }
+}
