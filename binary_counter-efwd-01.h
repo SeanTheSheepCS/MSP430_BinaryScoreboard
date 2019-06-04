@@ -109,6 +109,7 @@ void turnAllScoreLedsOff();
 void turnAllLifeLedsOn();
 void decrementLivesByOne();
 void incrementScoreByOne();
+void manageSpareButtonPress();
 
 /****************************************************************************************
 State Machine Functions

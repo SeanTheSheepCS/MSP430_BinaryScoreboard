@@ -823,7 +823,7 @@
                 </option>
                 <option>
                     <name>XclFile</name>
-                    <state>D:\EiE\EiE_Git\MSP430_BLINKY\lnk430F2122_BLINK.xcl</state>
+                    <state>$PROJ_DIR$\..\lnk430F2122_BLINK.xcl</state>
                 </option>
                 <option>
                     <name>XclFileSlave</name>

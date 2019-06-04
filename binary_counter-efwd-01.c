@@ -200,6 +200,13 @@ void CounterSM_ResetButtonPressed()
 {
   turnAllScoreLedsOff();
   turnAllLifeLedsOn();
+  CounterStateMachine = CounterSM_Sleep;
+}
+
+void CounterSM_SpareButtonPressed()
+{
+  manageSpareButtonPress();
+  CounterStateMachine = CounterSM_Sleep;
 }
 
 
@@ -219,7 +226,12 @@ void CounterSM_ResetButtonPressed()
 
 HERE BEGINS THE CODE THAT THE CAMPERS WILL WRITE.
 The campers will implement each of these functions and then bring it to the leader to be inspected and run on the board.
-Solutions are provided here.
+Solutions are provided here. The functions they will need to know about are as follows:
+
+-void LedOff(LedInformation LedInfo)
+-void LedOn(LedInformation LedInfo)
+-bool isLedOff(LedInformation LedInfo)
+-bool isLedOn(LedInformation LedInfo)
 
 -----------------------------------------------------------------------------*/
 
@@ -272,4 +284,9 @@ void incrementScoreByOne()
       LedOff(LG_u8ScoreLeds[i]);
     }
   }
+}
+
+void manageSpareButtonPress()
+{
+  //The campers can put anything they want here!
 }

@@ -82,8 +82,7 @@ __interrupt void Port2ISR(void)
   }
   else if( !(P2IN &  P2_7_BUTTON_0) )
   {
-    //DO A THING
-    //G_fCurrentStateMachine = ??? 
+    G_fCurrentStateMachine = CounterSM_SpareButtonPressed;
   }
  
   /* Clear the flag, but keep the interrupt active */

@@ -23,6 +23,9 @@
     <EEM_Cycle_Counter_1>
         <Counter1>0000000000000000000000000000000000000000000000000000000000000000</Counter1>
     </EEM_Cycle_Counter_1>
+    <DebugChecksum>
+        <Checksum>2828080747</Checksum>
+    </DebugChecksum>
     <Breakpoints>
         <Count>0</Count>
     </Breakpoints>
@@ -46,6 +49,11 @@
         <all_registers>0</all_registers>
         <File_name />
     </Memory_Dump>
+    <LogFile>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+        <Category>_ 0</Category>
+    </LogFile>
     <Aliases>
         <Count>0</Count>
         <SuppressDialog>0</SuppressDialog>
