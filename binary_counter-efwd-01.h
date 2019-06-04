@@ -103,6 +103,7 @@ Hardware Definitions
 /************************ Function Declarations ****************************/
 void CounterSM_Initialize();
 void SetTimer(u16 u16Taccr0_);
+void gameOver();
 
 /****************** Functions For The Campers To Fill **********************/
 void turnAllScoreLedsOff();
