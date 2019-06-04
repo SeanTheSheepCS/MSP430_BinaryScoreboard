@@ -78,8 +78,7 @@ __interrupt void Port2ISR(void)
   /* If button is still down, consider it a valid press */
   if( !(P2IN & P2_6_BUTTON_1) )
   {
-    //DO A THING
-    //G_fCurrentStateMachine = ??? 
+    G_fCurrentStateMachine = CounterSM_ResetButtonPressed;
   }
   else if( !(P2IN &  P2_7_BUTTON_0) )
   {

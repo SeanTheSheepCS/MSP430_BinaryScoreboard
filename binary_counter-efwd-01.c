@@ -123,15 +123,10 @@ void CounterSM_Initialize()
 /*----------------------------------------------------------------------------*/
 void CounterSM_GameOver()
 {
-  for(u8 i = 0; i < TOTAL_LEDS; i++)
-  {
-    *LG_pu16LedPorts[i] |= LG_u8Leds[i];
-  }
-  
+  turnAllScoreLedsOff();
   /* Sleep for max time (or could disable sleep timer interrupt */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   CounterStateMachine = CounterSM_Sleep;
-
     
 } /* end CounterSM_GameOver() */
 
@@ -139,11 +134,7 @@ void CounterSM_GameOver()
 /*----------------------------------------------------------------------------*/
 void CounterSM_Score()
 {
-  for(u8 i = 0; i < TOTAL_LEDS; i++)
-  {
-    *LG_pu16LedPorts[i] &= ~LG_u8Leds[i];
-  }
-  
+  incrementScoreByOne();
   /* Sleep for max time (or could disable sleep timer interrupt */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   CounterStateMachine = CounterSM_Sleep;
@@ -155,28 +146,9 @@ void CounterSM_Score()
 /*----------------------------------------------------------------------------*/
 void CounterSM_Idle()
 {
-  static bool bCurrentlyOn = FALSE;
   
-  /* LEDs are on, so turn them off and sleep long */
-  if(bCurrentlyOn)
-  {
-    for(u8 i = 0; i < TOTAL_LEDS; i++)
-    {
-      *LG_pu16LedPorts[i] &= ~LG_u8Leds[i];
-    }
-    bCurrentlyOn = FALSE;
-    u16GlobalCurrentSleepInterval = TIME_3S;
-  }
-  /* LEDS are off, so turn them on and sleep short */
-  else
-  {
-    for(u8 i = 0; i < TOTAL_LEDS; i++)
-    {
-      *LG_pu16LedPorts[i] |= LG_u8Leds[i];
-    }
-    bCurrentlyOn = TRUE;
-    u16GlobalCurrentSleepInterval = TIME_125MS;
-  }
+  
+  
 
   CounterStateMachine = CounterSM_Sleep;
   
