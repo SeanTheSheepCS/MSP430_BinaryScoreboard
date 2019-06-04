@@ -1,111 +1,82 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>17491817</fileChecksum>
+    <fileChecksum>1444078850</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$TOOLKIT_DIR$\inc\io430x21x2.h</file>
-            <file>$PROJ_DIR$\Debug\Exe\blink-efwd.d43</file>
+            <file>$PROJ_DIR$\Debug\Obj\blink-efwd-01.r43</file>
+            <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
             <file>$PROJ_DIR$\Debug\List\cstartup.lst</file>
             <file>$TOOLKIT_DIR$\inc\msp430x21x2.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\main.r43</file>
-            <file>$PROJ_DIR$\Debug\Obj\blink-efwd.pbd</file>
-            <file>$PROJ_DIR$\Debug\Exe\blink-efwd.ulp</file>
-            <file>$TOOLKIT_DIR$\inc\io430.h</file>
-            <file>$PROJ_DIR$\Debug\List\blink-efwd-01.lst</file>
-            <file>$TOOLKIT_DIR$\inc\cfi.m43</file>
-            <file>$PROJ_DIR$\Debug\Obj\blink-efwd-01.pbi</file>
             <file>$PROJ_DIR$\Debug\Obj\main.pbi</file>
-            <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
-            <file>$TOOLKIT_DIR$\inc\macros.m43</file>
-            <file>$PROJ_DIR$\Debug\Obj\blink-efwd-01.r43</file>
-            <file>$PROJ_DIR$\main.c</file>
-            <file>$PROJ_DIR$\main.h</file>
-            <file>$PROJ_DIR$\typedef_MSP430.h</file>
-            <file>$PROJ_DIR$\Debug\Obj\cstartup.r43</file>
-            <file>$PROJ_DIR$\blink-efwd-01.h</file>
-            <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
-            <file>$PROJ_DIR$\msp430x21x2.h</file>
-            <file>$PROJ_DIR$\Debug\List\main.lst</file>
-            <file>$PROJ_DIR$\Debug\List\blink-efwd.map</file>
-            <file>$PROJ_DIR$\io430x21x2.h</file>
-            <file>$PROJ_DIR$\blink-efwd-01.c</file>
-            <file>$PROJ_DIR$\cstartup.s43</file>
-            <file>$PROJ_DIR$\..\blink-efwd-01.h</file>
-            <file>$PROJ_DIR$\..\cstartup.s43</file>
-            <file>$PROJ_DIR$\..\blink-efwd-01.c</file>
-            <file>$PROJ_DIR$\..\io430x21x2.h</file>
             <file>$PROJ_DIR$\..\msp430x21x2.h</file>
+            <file>$PROJ_DIR$\Debug\List\blink-efwd.map</file>
+            <file>$TOOLKIT_DIR$\lib\dlib\dl430fn.r43</file>
+            <file>$PROJ_DIR$\..\lnk430F2122_BLINK.xcl</file>
+            <file>$PROJ_DIR$\blink-efwd-01.c</file>
+            <file>$TOOLKIT_DIR$\inc\io430.h</file>
+            <file>$PROJ_DIR$\Debug\Exe\blink-efwd.d43</file>
+            <file>$TOOLKIT_DIR$\inc\io430x21x2.h</file>
+            <file>$PROJ_DIR$\cstartup.s43</file>
+            <file>$TOOLKIT_DIR$\inc\io430f2122.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\cstartup.r43</file>
+            <file>$PROJ_DIR$\Debug\Obj\blink-efwd.pbd</file>
+            <file>$PROJ_DIR$\Debug\List\blink-efwd-01.lst</file>
+            <file>$PROJ_DIR$\Debug\Obj\blink-efwd-01.pbi</file>
+            <file>$PROJ_DIR$\typedef_MSP430.h</file>
+            <file>$PROJ_DIR$\Debug\Exe\blink-efwd.ulp</file>
             <file>$PROJ_DIR$\..\main.c</file>
+            <file>$PROJ_DIR$\main.h</file>
+            <file>$TOOLKIT_DIR$\inc\intrinsics.h</file>
+            <file>$PROJ_DIR$\Debug\List\main.lst</file>
+            <file>$TOOLKIT_DIR$\inc\macros.m43</file>
+            <file>$TOOLKIT_DIR$\inc\cfi.m43</file>
+            <file>$PROJ_DIR$\..\blink-efwd-01.h</file>
             <file>$PROJ_DIR$\..\main.h</file>
             <file>$PROJ_DIR$\..\typedef_MSP430.h</file>
-            <file>$TOOLKIT_DIR$\inc\io430f2122.h</file>
-            <file>$PROJ_DIR$\..\lnk430F2122_BLINK.xcl</file>
+            <file>$PROJ_DIR$\blink-efwd-01.h</file>
+            <file>$PROJ_DIR$\..\cstartup.s43</file>
+            <file>$PROJ_DIR$\..\io430x21x2.h</file>
+            <file>$PROJ_DIR$\..\blink-efwd-01.c</file>
+            <file>$PROJ_DIR$\main.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\binary_counter-efwd-01.r43</file>
+            <file>$PROJ_DIR$\Debug\Obj\binary_counter-efwd-01.pbi</file>
+            <file>$PROJ_DIR$\Debug\List\binary_counter-efwd-01.lst</file>
+            <file>$PROJ_DIR$\..\binary_counter-efwd-01.c</file>
+            <file>$PROJ_DIR$\..\binary_counter-efwd-01.h</file>
         </outputs>
         <file>
-            <name>[ROOT_NODE]</name>
+            <name>$PROJ_DIR$\blink-efwd-01.c</name>
             <outputs>
                 <tool>
-                    <name>ULP430</name>
-                    <file> 6</file>
+                    <name>ICC430</name>
+                    <file> 17 0</file>
                 </tool>
                 <tool>
-                    <name>XLINK</name>
-                    <file> 1 23</file>
+                    <name>BICOMP</name>
+                    <file> 18</file>
                 </tool>
             </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 10 12 23 19 30 22</file>
+                </tool>
+            </inputs>
         </file>
         <file>
             <name>$PROJ_DIR$\Debug\Exe\blink-efwd.d43</name>
             <outputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 23</file>
+                    <file> 6</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 36 14 18 4 20</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\main.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 22 4</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 11</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 7 0 12 17 16 19</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\blink-efwd-01.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 8 14</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 10</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 7 0 12 17 19 16</file>
+                    <file> 8 0 15 1 7</file>
                 </tool>
             </inputs>
         </file>
@@ -114,47 +85,13 @@
             <outputs>
                 <tool>
                     <name>A430</name>
-                    <file> 18 2</file>
+                    <file> 15 2</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>A430</name>
-                    <file> 13 9 3 0</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\cstartup.s43</name>
-            <outputs>
-                <tool>
-                    <name>A430</name>
-                    <file> 18 2</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>A430</name>
-                    <file> 13 9 3 0</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\blink-efwd-01.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 8 14</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 10</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 7 35 12 34 27 33</file>
+                    <file> 25 26 3 12</file>
                 </tool>
             </inputs>
         </file>
@@ -163,20 +100,121 @@
             <outputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 22 4</file>
+                    <file> 24</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 11</file>
+                    <file> 4</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 7 35 12 34 33 27</file>
+                    <file> 10 14 23 29 28 39</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 39 14 23 29 28 10</file>
                 </tool>
             </inputs>
         </file>
+        <file>
+            <name>$PROJ_DIR$\..\cstartup.s43</name>
+            <outputs>
+                <tool>
+                    <name>A430</name>
+                    <file> 15 2</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>A430</name>
+                    <file> 25 26 3 12</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\blink-efwd-01.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 17 0</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 10 14 23 29 27 28</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 28 23 29 27 14 10</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 24 1</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 4</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 10 12 23 19 22 30</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>[ROOT_NODE]</name>
+            <outputs>
+                <tool>
+                    <name>XLINK</name>
+                    <file> 6 11</file>
+                </tool>
+                <tool>
+                    <name>ULP430</name>
+                    <file> 20</file>
+                </tool>
+            </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\binary_counter-efwd-01.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 37</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 36</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 10 14 23 29 39 28</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 28 23 29 39 14 10</file>
+                </tool>
+            </inputs>
+        </file>
+        <forcedrebuild>
+            <name>[MULTI_TOOL]</name>
+            <tool>XLINK</tool>
+        </forcedrebuild>
     </configuration>
     <configuration>
         <name>Release</name>

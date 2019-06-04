@@ -2154,10 +2154,10 @@
         </settings>
     </configuration>
     <file>
-        <name>$PROJ_DIR$\..\blink-efwd-01.c</name>
+        <name>$PROJ_DIR$\..\binary_counter-efwd-01.c</name>
     </file>
     <file>
-        <name>$PROJ_DIR$\..\blink-efwd-01.h</name>
+        <name>$PROJ_DIR$\..\binary_counter-efwd-01.h</name>
     </file>
     <file>
         <name>$PROJ_DIR$\..\cstartup.s43</name>

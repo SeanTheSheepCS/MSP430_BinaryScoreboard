@@ -27,7 +27,7 @@ YYYY-MM-DD  Checksum  Comments
 #include "typedef_MSP430.h"
 #include "intrinsics.h"
 #include "main.h"
-#include "blink-efwd-01.h"
+#include "binary_counter-efwd-01.h"
 
 
 /************************ External Program Globals ****************************/

@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\Program Files (x86)\IAR Systems\EW430_7_12_1\common\bin\cspybat" -f "D:\EiE\EiE_Git\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --backend -f "D:\EiE\EiE_Git\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\EWMSP_7_12_1\common\bin\cspybat" -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Day Three\PinballMachine\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --backend -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Day Three\PinballMachine\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
 }
 else
 {
-& "C:\Program Files (x86)\IAR Systems\EW430_7_12_1\common\bin\cspybat" -f "D:\EiE\EiE_Git\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\EiE\EiE_Git\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
+& "C:\Program Files (x86)\IAR Systems\EWMSP_7_12_1\common\bin\cspybat" -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Day Three\PinballMachine\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\Users\ENGENUICS5\Desktop\2019_camps\Sean Kenny\Day Three\PinballMachine\MSP430_BLINKY\IAR_7_12_1\settings\blink-efwd.Debug.driver.xcl" 
 }
