@@ -36,22 +36,22 @@ volatile u16 u16GlobalCurrentSleepInterval;           /* Duration that the devic
 
 u8 LG_u8ScoreLedIdentifiers[LEDS_FOR_SCORE]   = {P2_4_LED1,    P1_0_LED2,    P1_1_LED3,    P1_2_LED4,    P1_3_LED5,    P3_2_LED6};
 u16*  LG_pu16ScoreLedPorts[LEDS_FOR_SCORE]    = {(u16*)0x0029, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0019};
-LedInformation LG_u8ScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_4_LED1},
+LedInformation LG_aLedInfoScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_4_LED1},
                                                  {(u16*)0x0021, P1_0_LED2},
                                                  {(u16*)0x0021, P1_1_LED3},
                                                  {(u16*)0x0021, P1_2_LED4},
                                                  {(u16*)0x0021, P1_3_LED5},
                                                  {(u16*)0x0019, P3_2_LED6}};
 //This is so that the campers will have a simpler name to use
-#define scoreLeds LG_u8ScoreLeds
+#define scoreLeds LG_aLedInfoScoreLeds
 
 u8 LG_u8LifeLedIdentifiers[LEDS_FOR_LIVES]   = {P3_1_LED7,    P3_0_LED8,    P2_2_LED9};
 u16*  LG_pu16LifeLedPorts[LEDS_FOR_LIVES]    = {(u16*)0x0019, (u16*)0x0019, (u16*)0x0029};
-LedInformation LG_u8LifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0019, P3_1_LED7},
+LedInformation LG_aLedInfoLifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0019, P3_1_LED7},
                                                 {(u16*)0x0019, P3_0_LED8},
                                                 {(u16*)0x0029, P2_2_LED9}};
 //This is so that the campers will have a simpler name to use
-#define lifeLeds LG_u8LifeLeds
+#define lifeLeds LG_aLedInfoLifeLeds
 
 u8  LG_u8ActiveIndex  = 0;
 
@@ -247,16 +247,16 @@ void CounterSM_TestState()
 {
   while(1)
   {
-    LedOn(LG_u8LifeLeds[2]);
-    if(isLedOn(LG_u8ScoreLeds[0]))
+    LedOn(LG_aLedInfoLifeLeds[2]);
+    if(isLedOn(LG_aLedInfoScoreLeds[0]))
     {
-      LedOn(LG_u8ScoreLeds[2]);
-      LedOff(LG_u8ScoreLeds[3]);
+      LedOn(LG_aLedInfoScoreLeds[2]);
+      LedOff(LG_aLedInfoScoreLeds[3]);
     }
     else
     {
-      LedOff(LG_u8ScoreLeds[2]);
-      LedOn(LG_u8ScoreLeds[3]);
+      LedOff(LG_aLedInfoScoreLeds[2]);
+      LedOn(LG_aLedInfoScoreLeds[3]);
     }
   }
 }
@@ -306,7 +306,7 @@ void turnAllScoreLedsOff()
 {
   for(int i = 0; i < LEDS_FOR_SCORE; i++)
   {
-    LedOff(LG_u8ScoreLeds[i]);
+    LedOff(LG_aLedInfoScoreLeds[i]);
   }
 }
 
@@ -314,7 +314,7 @@ void turnAllLifeLedsOn()
 {
   for(int i = 0; i < LEDS_FOR_LIVES; i++)
   {
-    LedOn(LG_u8LifeLeds[i]);
+    LedOn(LG_aLedInfoLifeLeds[i]);
   }
 }
 
@@ -322,9 +322,9 @@ void decrementLivesByOne()
 {
   for(int i = 0; i < LEDS_FOR_LIVES; i++)
   {
-    if(isLedOn(LG_u8LifeLeds[i]))
+    if(isLedOn(LG_aLedInfoLifeLeds[i]))
     {
-      LedOff(LG_u8LifeLeds[i]);
+      LedOff(LG_aLedInfoLifeLeds[i]);
       return;
     }
   }
@@ -335,14 +335,14 @@ void incrementScoreByOne()
 {
   for(int i = 0; i < LEDS_FOR_SCORE; i++)
   {
-    if(isLedOff(LG_u8ScoreLeds[i]))
+    if(isLedOff(LG_aLedInfoScoreLeds[i]))
     {
-      LedOn(LG_u8ScoreLeds[i]);
+      LedOn(LG_aLedInfoScoreLeds[i]);
       return;
     }
     else
     {
-      LedOff(LG_u8ScoreLeds[i]);
+      LedOff(LG_aLedInfoScoreLeds[i]);
     }
   }
 }
