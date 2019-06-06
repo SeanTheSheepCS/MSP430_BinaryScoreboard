@@ -6,6 +6,7 @@
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2013-09-14  First release.
+2019-06-05  Binary counter scoreboard first attempt
 
 ************************************************************************/
 
@@ -41,12 +42,16 @@ LedInformation LG_u8ScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_4_LED1},
                                                  {(u16*)0x0021, P1_2_LED4},
                                                  {(u16*)0x0021, P1_3_LED5},
                                                  {(u16*)0x0019, P3_2_LED6}};
+//This is so that the campers will have a simpler name to use
+#define scoreLeds LG_u8ScoreLeds
 
 u8 LG_u8LifeLedIdentifiers[LEDS_FOR_LIVES]   = {P3_1_LED7,    P3_0_LED8,    P2_2_LED9};
 u16*  LG_pu16LifeLedPorts[LEDS_FOR_LIVES]    = {(u16*)0x0019, (u16*)0x0019, (u16*)0x0029};
 LedInformation LG_u8LifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0019, P3_1_LED7},
                                                 {(u16*)0x0019, P3_0_LED8},
                                                 {(u16*)0x0029, P2_2_LED9}};
+//This is so that the campers will have a simpler name to use
+#define lifeLeds LG_u8LifeLeds
 
 u8  LG_u8ActiveIndex  = 0;
 
@@ -115,13 +120,38 @@ void CounterSM_Initialize()
   u16GlobalCurrentSleepInterval = TIME_MAX;
     
   /* Allow a button interrupt and timer to wake up sleep */
+  P2IFG &= ~P2_0_LOSELIFE;
+  P2IE |= P2_0_LOSELIFE;	
+  P2IFG &= ~P2_1_SCORE;
+  P2IE |= P2_1_SCORE;	
   P2IFG &= ~P2_6_BUTTON_1;
   P2IE |= P2_6_BUTTON_1;	
   P2IFG &= ~P2_7_BUTTON_0;
   P2IE |= P2_7_BUTTON_0;	
   TACTL = TIMERA_INT_ENABLE;
+  
+  P1DIR |= P1_0_LED2;
+  P1DIR |= P1_1_LED3;
+  P1DIR |= P1_2_LED4;
+  P1DIR |= P1_3_LED5;
+  
+  P2DIR &= ~P2_0_LOSELIFE;
+  P2DIR &= ~P2_1_SCORE;
+  P2DIR |= P2_2_LED9;
+  P2DIR |= P2_3_RGB_RED;
+  P2DIR |= P2_4_LED1;
+  P2DIR &= ~P2_5_SPARE;
+  P2DIR &= ~P2_6_BUTTON_1;
+  P2DIR &= ~P2_7_BUTTON_0;
+  
+  P3DIR |= P3_0_LED8;
+  P3DIR |= P3_1_LED7;
+  P3DIR |= P3_2_LED6;
+  P3DIR |= P3_3_BUZZER_1;
+  P3DIR |= P3_6_RGB_BLU;
+  P3DIR |= P3_7_RGB_BLU;
        
-  CounterStateMachine = CounterSM_Sleep;
+  CounterStateMachine = CounterSM_TestState;
   
 } /* end CounterSM_Initialize */
 
@@ -137,7 +167,7 @@ void CounterSM_GameOver()
 
 
 /*----------------------------------------------------------------------------*/
-void CounterSM_Score()
+void CounterSM_ScorePostTouched()
 {
   incrementScoreByOne();
   /* Sleep for max time (or could disable sleep timer interrupt */
@@ -145,8 +175,13 @@ void CounterSM_Score()
   CounterStateMachine = CounterSM_Sleep;
 
     
-} /* end CounterSM_Score() */
+} /* end CounterSM_ScorePostTouched() */
 
+/*----------------------------------------------------------------------------*/
+void CounterSM_LoseLifePostTouched()
+{
+  
+}
  
 /*----------------------------------------------------------------------------*/
 void CounterSM_Idle()
@@ -206,6 +241,24 @@ void CounterSM_ResetButtonPressed()
   turnAllScoreLedsOff();
   turnAllLifeLedsOn();
   CounterStateMachine = CounterSM_Sleep;
+}
+
+void CounterSM_TestState()
+{
+  while(1)
+  {
+    LedOn(LG_u8LifeLeds[2]);
+    if(isLedOn(LG_u8ScoreLeds[0]))
+    {
+      LedOn(LG_u8ScoreLeds[2]);
+      LedOff(LG_u8ScoreLeds[3]);
+    }
+    else
+    {
+      LedOff(LG_u8ScoreLeds[2]);
+      LedOn(LG_u8ScoreLeds[3]);
+    }
+  }
 }
 
 void CounterSM_SpareButtonPressed()
@@ -272,13 +325,10 @@ void decrementLivesByOne()
     if(isLedOn(LG_u8LifeLeds[i]))
     {
       LedOff(LG_u8LifeLeds[i]);
-      break;
-    }
-    else if(i == 0)
-    {
-      gameOver();
+      return;
     }
   }
+  gameOver();
 }
 
 void incrementScoreByOne()
@@ -288,7 +338,7 @@ void incrementScoreByOne()
     if(isLedOff(LG_u8ScoreLeds[i]))
     {
       LedOn(LG_u8ScoreLeds[i]);
-      break;
+      return;
     }
     else
     {

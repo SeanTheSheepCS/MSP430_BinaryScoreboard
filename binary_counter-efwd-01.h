@@ -6,6 +6,7 @@
 YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2013-11-21  Port from ANT key fob.
+2019-06-05  Binary counter scoreboard first attempt
 
 ************************************************************************/
 
@@ -54,7 +55,7 @@ Hardware Definitions
 #define P1_7_                    0x80
 
 /* Port 2 pins */
-#define P2_0_GAMEOVER            0x01
+#define P2_0_LOSELIFE            0x01
 #define P2_1_SCORE               0x02
 #define P2_2_LED9                0x04
 #define P2_3_RGB_RED             0x08
@@ -119,6 +120,8 @@ void CounterSM_GameOver();                 /* The state the counter enters if th
 void CounterSM_Score();                    /* The state the counter enters if the score signal is a one */
 void CounterSM_Idle();                     /* The state the counter enters if nothing of note has recently happened */
 void CounterSM_ResetButtonPressed();       /* The state the counter enters if the reset button is pressed */
+void CounterSM_TestState();                /* Used for testing */
+void CounterSM_SpareButtonPressed();       /* The state the counter enters if the spare button was pressed */
 
 void CounterSM_Sleep();                    /* Determines which mode of sleep to enter and sleep */
 
