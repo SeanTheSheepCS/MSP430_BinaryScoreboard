@@ -37,19 +37,19 @@ volatile u16 u16GlobalCurrentSleepInterval;           /* Duration that the devic
 u8 LG_u8ScoreLedIdentifiers[LEDS_FOR_SCORE]   = {P2_4_LED1,    P1_0_LED2,    P1_1_LED3,    P1_2_LED4,    P1_3_LED5,    P3_2_LED6};
 u16*  LG_pu16ScoreLedPorts[LEDS_FOR_SCORE]    = {(u16*)0x0029, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0021, (u16*)0x0019};
 LedInformation LG_aLedInfoScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_4_LED1},
-                                                 {(u16*)0x0021, P1_0_LED2},
-                                                 {(u16*)0x0021, P1_1_LED3},
-                                                 {(u16*)0x0021, P1_2_LED4},
-                                                 {(u16*)0x0021, P1_3_LED5},
-                                                 {(u16*)0x0019, P3_2_LED6}};
+                                                       {(u16*)0x0021, P1_0_LED2},
+                                                       {(u16*)0x0021, P1_1_LED3},
+                                                       {(u16*)0x0021, P1_2_LED4},
+                                                       {(u16*)0x0021, P1_3_LED5},
+                                                       {(u16*)0x0019, P3_2_LED6}};
 //This is so that the campers will have a simpler name to use
 #define scoreLeds LG_aLedInfoScoreLeds
 
 u8 LG_u8LifeLedIdentifiers[LEDS_FOR_LIVES]   = {P3_1_LED7,    P3_0_LED8,    P2_2_LED9};
 u16*  LG_pu16LifeLedPorts[LEDS_FOR_LIVES]    = {(u16*)0x0019, (u16*)0x0019, (u16*)0x0029};
 LedInformation LG_aLedInfoLifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0019, P3_1_LED7},
-                                                {(u16*)0x0019, P3_0_LED8},
-                                                {(u16*)0x0029, P2_2_LED9}};
+                                                      {(u16*)0x0019, P3_0_LED8},
+                                                      {(u16*)0x0029, P2_2_LED9}};
 //This is so that the campers will have a simpler name to use
 #define lifeLeds LG_aLedInfoLifeLeds
 
