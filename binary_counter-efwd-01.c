@@ -120,8 +120,8 @@ void CounterSM_Initialize()
   u16GlobalCurrentSleepInterval = TIME_MAX;
     
   /* Allow a button interrupt and timer to wake up sleep */
-  P2IFG &= ~P2_0_LOSELIFE;
-  P2IE |= P2_0_LOSELIFE;	
+  P2IFG &= ~P2_0_LOSELIFE; //Clearing flag
+  P2IE |= P2_0_LOSELIFE; //Enables interrupt
   P2IFG &= ~P2_1_SCORE;
   P2IE |= P2_1_SCORE;	
   P2IFG &= ~P2_6_BUTTON_1;
@@ -180,7 +180,9 @@ void CounterSM_ScorePostTouched()
 /*----------------------------------------------------------------------------*/
 void CounterSM_LoseLifePostTouched()
 {
-  
+  decrementLivesByOne();
+  u16GlobalCurrentSleepInterval = TIME_MAX;
+  CounterStateMachine = CounterSM_Sleep;
 }
  
 /*----------------------------------------------------------------------------*/
