@@ -151,7 +151,7 @@ void CounterSM_Initialize()
   P3DIR |= P3_6_RGB_BLU;
   P3DIR |= P3_7_RGB_BLU;
        
-  CounterStateMachine = CounterSM_TestState;
+  CounterStateMachine = CounterSM_Idle;
   
 } /* end CounterSM_Initialize */
 
