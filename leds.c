@@ -27,6 +27,7 @@ bool isLedOn(LedInformation LEDInfo)
 {
   return (((*(LEDInfo.u16pPortAddress)) & LEDInfo.u8LEDIdentifier) == LEDInfo.u8LEDIdentifier);
 }
+
 bool isLedOff(LedInformation LEDInfo)
 {
   return !isLedOn(LEDInfo);

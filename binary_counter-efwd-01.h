@@ -7,6 +7,7 @@ YYYY-MM-DD  Comments
 -------------------------------------------------------------------------------------------
 2013-11-21  Port from ANT key fob.
 2019-06-05  Binary counter scoreboard first attempt
+2019-06-24  Pin assignments changed
 
 ************************************************************************/
 
@@ -45,35 +46,35 @@ Constants
 Hardware Definitions
 ****************************************************************************************/
 /* Port 1 pins */
-#define P1_0_LED2                0x01
-#define P1_1_LED3                0x02
-#define P1_2_LED4                0x04
-#define P1_3_LED5                0x08
+#define P1_0_RGB_BLU             0x01
+#define P1_1_RGB_GRN             0x02
+#define P1_2_RGB_RED             0x04
+#define P1_3_BUTTON_0             0x08
 #define P1_4_                    0x10
 #define P1_5_                    0x20
 #define P1_6_                    0x40
 #define P1_7_                    0x80
 
 /* Port 2 pins */
-#define P2_0_LOSELIFE            0x01
-#define P2_1_SCORE               0x02
-#define P2_2_LED9                0x04
-#define P2_3_RGB_RED             0x08
-#define P2_4_LED1                0x10
+#define P2_0_LED1                0x01
+#define P2_1_LED2                0x02
+#define P2_2_LED3                0x04
+#define P2_3_LED8                0x08
+#define P2_4_LED7                0x10
 #define P2_5_SPARE               0x20
-#define P2_6_BUTTON_1            0x40
-#define P2_7_BUTTON_0            0x80
+#define P2_6_SCORE               0x40
+#define P2_7_LOSELIFE            0x80
 
 
 /* Port 3 pins */
-#define P3_0_LED8                0x01
-#define P3_1_LED7                0x02
+#define P3_0_LED4                0x01
+#define P3_1_LED5                0x02
 #define P3_2_LED6                0x04
-#define P3_3_BUZZER_1            0x08
+#define P3_3_BUTTON_1            0x08
 #define P3_4_                    0x10
 #define P3_5_                    0x20
-#define P3_6_RGB_BLU             0x40
-#define P3_7_RGB_BLU             0x80
+#define P3_6_BUZZER              0x40
+#define P3_7_LED9                0x80
 
 /* Setup constants */
 #define TIMERA_INT_ENABLE  0x0196
@@ -122,6 +123,9 @@ void CounterSM_Idle();                     /* The state the counter enters if no
 void CounterSM_ResetButtonPressed();       /* The state the counter enters if the reset button is pressed */
 void CounterSM_TestState();                /* Used for testing */
 void CounterSM_SpareButtonPressed();       /* The state the counter enters if the spare button was pressed */
+void CounterSM_LoseLifePostTouched();      /* The state the counter enters if a life is lost */
+void CounterSM_ScorePostTouched();         /* The state the counter enters if the score post is touched */
+
 
 void CounterSM_Sleep();                    /* Determines which mode of sleep to enter and sleep */
 

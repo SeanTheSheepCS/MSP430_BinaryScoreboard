@@ -76,28 +76,18 @@ __interrupt void Port2ISR(void)
   for(u16 i = 0; i < 120; i++);
   
   /* If button is still down, consider it a valid press */
-  if( !(P2IN & P2_0_LOSELIFE) )
+  if( !(P2IN & P2_7_LOSELIFE) )
   {
     G_fCurrentStateMachine = CounterSM_LoseLifePostTouched;
   }
-  else if( !(P2IN & P2_1_SCORE) )
+  else if( !(P2IN & P2_6_SCORE) )
   {
     G_fCurrentStateMachine = CounterSM_ScorePostTouched;
   }
-  else if( !(P2IN & P2_6_BUTTON_1) )
-  {
-    G_fCurrentStateMachine = CounterSM_ResetButtonPressed;
-  }
-  else if( !(P2IN & P2_7_BUTTON_0) )
-  {
-    G_fCurrentStateMachine = CounterSM_SpareButtonPressed;
-  }
  
   /* Clear the flag, but keep the interrupt active */
-  P2IFG &= ~P2_0_LOSELIFE;
-  P2IFG &= ~P2_1_SCORE;
-  P2IFG &= ~P2_6_BUTTON_1;
-  P2IFG &= ~P2_7_BUTTON_0;
+  P2IFG &= ~P2_7_LOSELIFE;
+  P2IFG &= ~P2_6_SCORE;
   
   //u8GlobalCurrentSleepInterval = SLEEP_TIME;
   //u8GlobalSleepCounter = 1;
