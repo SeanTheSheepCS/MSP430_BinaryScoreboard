@@ -2304,7 +2304,19 @@
         <name>$PROJ_DIR$\..\binary_counter-efwd-01.h</name>
     </file>
     <file>
+        <name>$PROJ_DIR$\..\buttons.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\buttons.h</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\..\cstartup.s43</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\input_pins.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\input_pins.h</name>
     </file>
     <file>
         <name>$PROJ_DIR$\..\io430x21x2.h</name>

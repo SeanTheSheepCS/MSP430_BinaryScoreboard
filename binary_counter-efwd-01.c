@@ -17,6 +17,8 @@ YYYY-MM-DD  Comments
 #include "binary_counter-efwd-01.h"
 #include "main.h"
 #include "leds.h"
+#include "buttons.h"
+#include "input_pins.h"
 
 /******************** External Globals ************************/
 /* Globally available variables from other files as indicated */
@@ -24,8 +26,7 @@ YYYY-MM-DD  Comments
 
 /******************** Program Globals ************************/
 /* Global variable definitions intended for scope across multiple files */
-fnCode_type CounterStateMachine = CounterSM_Initialize;   /* The application state machine */
-fnCode_type G_fCurrentStateMachine = CounterSM_Idle;  
+fnCode_type G_fCounterStateMachine = CounterSM_Initialize;   /* The application state machine */  
 
 volatile u16 u16GlobalRuntimeFlags = 0;               /* Flag register for communicating various runtime events. */
 volatile u16 u16GlobalErrorFlags = 0;                 /* Flag register for communicating errors. */
@@ -35,8 +36,6 @@ volatile u16 u16GlobalCurrentSleepInterval;           /* Duration that the devic
 /******************** Local Globals ************************/
 /* Global variable definitions intended only for the scope of this file */
 
-u8 LG_u8ScoreLedIdentifiers[LEDS_FOR_SCORE]   = {P2_0_LED1,    P2_1_LED2,    P2_2_LED3,    P3_0_LED4,    P3_1_LED5,    P3_2_LED6};
-u16*  LG_pu16ScoreLedPorts[LEDS_FOR_SCORE]    = {(u16*)0x0029, (u16*)0x0029, (u16*)0x0029, (u16*)0x0019, (u16*)0x0019, (u16*)0x0019};
 LedInformation LG_aLedInfoScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_0_LED1},
                                                        {(u16*)0x0029, P2_1_LED2},
                                                        {(u16*)0x0029, P2_2_LED3},
@@ -46,13 +45,27 @@ LedInformation LG_aLedInfoScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_0_LED1}
 //This is so that the campers will have a simpler name to use
 #define scoreLeds LG_aLedInfoScoreLeds
 
-u8 LG_u8LifeLedIdentifiers[LEDS_FOR_LIVES]   = {P2_4_LED7,    P2_3_LED8,    P3_7_LED9};
-u16*  LG_pu16LifeLedPorts[LEDS_FOR_LIVES]    = {(u16*)0x0029, (u16*)0x0029, (u16*)0x0019};
 LedInformation LG_aLedInfoLifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0029, P2_4_LED7},
                                                       {(u16*)0x0029, P2_3_LED8},
                                                       {(u16*)0x0019, P3_7_LED9}};
 //This is so that the campers will have a simpler name to use
 #define lifeLeds LG_aLedInfoLifeLeds
+
+ButtonInformation LG_aButtonInfoButtons[NUMBER_OF_BUTTONS] = {{(u16*)0x0020, P1_3_BUTTON_0},
+                                                              {(u16*)0x0018, P3_3_BUTTON_1}};
+
+//This is so that the campers will have a simpler name to use
+#define RESET_BUTTON LG_aButtonInfoButtons[0]
+#define SPARE_BUTTON LG_aButtonInfoButtons[1]
+
+InputPinInformation LG_aInputPinInfoInputPins[NUMBER_OF_INPUT_PINS] = {{(u16*)0x0028, P2_5_SPARE},
+                                                                       {(u16*)0x0028, P2_6_SCORE},
+                                                                       {(u16*)0x0028, P2_7_LOSELIFE}};
+
+//This is so that the campers will have a simpler name to use
+#define SPARE_PIN LG_aInputPinInfoInputPins[0]
+#define SCORE_PIN LG_aInputPinInfoInputPins[1]
+#define LOSE_LIFE_PIN LG_aInputPinInfoInputPins[2]
 
 u8  LG_u8ActiveIndex  = 0;
 
@@ -82,7 +95,7 @@ void SetTimer(u16 usTaccr0_)
 
 void gameOver()
 {
-  CounterStateMachine = CounterSM_GameOver;
+  G_fCounterStateMachine = CounterSM_GameOver;
 }
   
 
@@ -114,14 +127,8 @@ void CounterSM_Initialize()
   P3DIR &= ~P3_3_BUTTON_1;
   P3DIR |= P3_6_BUZZER;
   P3DIR |= P3_7_LED9;
-  
-  /* Allow an interrupt for the posts */
-  P2IFG &= ~P2_7_LOSELIFE; //Clearing flag
-  P2IE |= P2_7_LOSELIFE; //Enables interrupt
-  P2IFG &= ~P2_6_SCORE;
-  P2IE |= P2_6_SCORE;		
        
-  CounterStateMachine = CounterSM_Idle;
+  G_fCounterStateMachine = CounterSM_Idle;
   
 } /* end CounterSM_Initialize */
 
@@ -129,7 +136,7 @@ void CounterSM_Initialize()
 void CounterSM_GameOver()
 {
   turnAllScoreLedsOff();
-  CounterStateMachine = CounterSM_Idle;
+  G_fCounterStateMachine = CounterSM_Idle;
     
 } /* end CounterSM_GameOver() */
 
@@ -137,21 +144,60 @@ void CounterSM_GameOver()
 /*----------------------------------------------------------------------------*/
 void CounterSM_ScorePostTouched()
 {
-  incrementScoreByOne();
-  CounterStateMachine = CounterSM_Idle;
+  if(!IsInputPinOnVoltageLow(SCORE_PIN))
+  {
+    G_fCounterStateMachine = CounterSM_Idle;
+  }
 } /* end CounterSM_ScorePostTouched() */
 
 /*----------------------------------------------------------------------------*/
 void CounterSM_LoseLifePostTouched()
 {
-  decrementLivesByOne();
-  CounterStateMachine = CounterSM_Idle;
+  if(!IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
+  {
+    G_fCounterStateMachine = CounterSM_Idle;
+  }
 }
  
 /*----------------------------------------------------------------------------*/
 void CounterSM_Idle()
 {
-   
+  if(IsButtonPressed(RESET_BUTTON))
+  {
+    /* Debounce the button for 10 ms */
+    /* 120 / 12,000 = 10 ms */
+    for(u16 i = 0; i < 120; i++);
+    turnAllScoreLedsOff();
+    turnAllLifeLedsOn();
+    G_fCounterStateMachine = CounterSM_ResetButtonPressed;
+  }
+  
+  if(IsButtonPressed(SPARE_BUTTON))
+  {
+    /* Debounce the button for 10 ms */
+    /* 120 / 12,000 = 10 ms */
+    for(u16 i = 0; i < 120; i++);
+    manageSpareButtonPress();
+    G_fCounterStateMachine = CounterSM_SpareButtonPressed;
+  }
+  
+  if(IsInputPinOnVoltageLow(SCORE_PIN))
+  {
+    /* Debounce the button for 10 ms */
+    /* 120 / 12,000 = 10 ms */
+    for(u16 i = 0; i < 120; i++);
+    incrementScoreByOne();
+    G_fCounterStateMachine = CounterSM_ScorePostTouched;
+  }
+  
+  if(IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
+  {
+    /* Debounce the button for 10 ms */
+    /* 120 / 12,000 = 10 ms */
+    for(u16 i = 0; i < 120; i++);
+    decrementLivesByOne();
+    G_fCounterStateMachine = CounterSM_LoseLifePostTouched;
+  }
 } /* end CounterSM_Idle() */
 
 /*----------------------------------------------------------------------------*/
@@ -165,27 +211,27 @@ void CounterSM_Sleep()
   __bis_SR_register(CPUOFF);
      
   /* Wake up (timer interrupt is off now from ISR) and go to next state */
-  CounterStateMachine = G_fCurrentStateMachine;
-
+  if(G_fCounterStateMachine == CounterSM_Sleep)
+  {
+    G_fCounterStateMachine = CounterSM_Idle;
+  }
 } /* end CounterSM_Sleep */
 
 void CounterSM_ResetButtonPressed()
 {
-  turnAllScoreLedsOff();
-  turnAllLifeLedsOn();
-  CounterStateMachine = CounterSM_Idle;
-}
-
-void CounterSM_TestState()
-{
-  turnAllScoreLedsOff();
-  turnAllLifeLedsOn();
+  if(!IsButtonPressed(RESET_BUTTON))
+  {
+    G_fCounterStateMachine = CounterSM_Idle;
+  }
 }
 
 void CounterSM_SpareButtonPressed()
 {
   manageSpareButtonPress();
-  CounterStateMachine = CounterSM_Idle;
+  if(!IsButtonPressed(SPARE_BUTTON))
+  {
+    G_fCounterStateMachine = CounterSM_Idle;
+  }
 }
 
 

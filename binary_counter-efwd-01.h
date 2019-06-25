@@ -29,8 +29,10 @@ Constants
 #define TIME_7S             (u16)20832 /* Taccro for 7 second period */
 #define TIME_MAX            (u16)65535 /* Taccro for max second period */
 
-#define LEDS_FOR_SCORE      (u8)6
-#define LEDS_FOR_LIVES      (u8)3
+#define LEDS_FOR_SCORE       (u8)6
+#define LEDS_FOR_LIVES       (u8)3
+#define NUMBER_OF_BUTTONS    (u8)2
+#define NUMBER_OF_INPUT_PINS (u8)3
 
 #define SCORE_LED1                (u8)0
 #define SCORE_LED2                (u8)1

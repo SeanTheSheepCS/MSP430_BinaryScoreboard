@@ -32,18 +32,7 @@ YYYY-MM-DD  Checksum  Comments
 
 /************************ External Program Globals ****************************/
 /* Globally available variables from other files as indicated */
-extern fnCode_type CounterStateMachine;                 /* From blink-efwd-01.c */
-extern fnCode_type G_fCurrentStateMachine;            /* From blink-efwd-01.c */
-extern fnCode_type G_pfPatterns[];                    /* From blink-efwd-01.c */
- 
-
-extern volatile u16 u16GlobalRuntimeFlags;            /* From blink-efwd-01.c */
-extern volatile u16 u16GlobalErrorFlags;              /* From blink-efwd-01.c */
-
-extern volatile u8 u8GlobalCurrentSleepInterval;      /* From blink-efwd-01.c */
-extern volatile u8 G_u8ActivePattern;                 /* From blink-efwd-01.c */
-extern fnCode_type LG_fPatterns[];                    /* From blink-efwd-01.c */
-
+extern fnCode_type G_fCounterStateMachine;            /* From binary_counter-efwd-01.c */
 
 /************************ Program Globals ****************************/
 /* Global variable definitions intended for scope of multiple files */
@@ -60,7 +49,7 @@ int main(void)
 
   while(1)
   {
-	  CounterStateMachine();
+	  G_fCounterStateMachine();
   } 
   
 } /* end main */
@@ -71,18 +60,18 @@ int main(void)
 __interrupt void Port2ISR(void)
 /* Handles waking up from low power mode via a button press and returns with processor awake */
 {
-  /* Debounce the button press for 10 ms -- not a great idea in an ISR but ok for a hack */
+  /* Debounce the pin for 10 ms -- not a great idea in an ISR but ok for a hack */
   /* 120 / 12,000 = 10 ms */
   for(u16 i = 0; i < 120; i++);
   
-  /* If button is still down, consider it a valid press */
+  /* If pin is still grounded, consider it valid */
   if( !(P2IN & P2_7_LOSELIFE) )
   {
-    G_fCurrentStateMachine = CounterSM_LoseLifePostTouched;
+    G_fCounterStateMachine = CounterSM_LoseLifePostTouched;
   }
   else if( !(P2IN & P2_6_SCORE) )
   {
-    G_fCurrentStateMachine = CounterSM_ScorePostTouched;
+    G_fCounterStateMachine = CounterSM_ScorePostTouched;
   }
  
   /* Clear the flag, but keep the interrupt active */
