@@ -93,17 +93,6 @@ void CounterSM_Initialize()
 {
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
-    
-  /* Allow a button interrupt and timer to wake up sleep */
-  P2IFG &= ~P2_7_LOSELIFE; //Clearing flag
-  P2IE |= P2_7_LOSELIFE; //Enables interrupt
-  P2IFG &= ~P2_6_SCORE;
-  P2IE |= P2_6_SCORE;	
-  P1IFG &= ~P1_3_BUTTON_0;
-  P1IE |= P1_3_BUTTON_0;	
-  //P3IFG &= ~P3_3_BUTTON_0;
-  //P3IE |= P3_3_BUTTON_0;	
-  TACTL = TIMERA_INT_ENABLE;
   
   P1DIR |= P1_0_RGB_BLU;
   P1DIR |= P1_1_RGB_GRN;
@@ -125,6 +114,12 @@ void CounterSM_Initialize()
   P3DIR &= ~P3_3_BUTTON_1;
   P3DIR |= P3_6_BUZZER;
   P3DIR |= P3_7_LED9;
+  
+  /* Allow an interrupt for the posts */
+  P2IFG &= ~P2_7_LOSELIFE; //Clearing flag
+  P2IE |= P2_7_LOSELIFE; //Enables interrupt
+  P2IFG &= ~P2_6_SCORE;
+  P2IE |= P2_6_SCORE;		
        
   CounterStateMachine = CounterSM_Idle;
   
@@ -134,9 +129,7 @@ void CounterSM_Initialize()
 void CounterSM_GameOver()
 {
   turnAllScoreLedsOff();
-  /* Sleep for max time (or could disable sleep timer interrupt */
-  u16GlobalCurrentSleepInterval = TIME_MAX;
-  CounterStateMachine = CounterSM_Sleep;
+  CounterStateMachine = CounterSM_Idle;
     
 } /* end CounterSM_GameOver() */
 
@@ -145,30 +138,20 @@ void CounterSM_GameOver()
 void CounterSM_ScorePostTouched()
 {
   incrementScoreByOne();
-  /* Sleep for max time (or could disable sleep timer interrupt */
-  u16GlobalCurrentSleepInterval = TIME_MAX;
-  CounterStateMachine = CounterSM_Sleep;
-
-    
+  CounterStateMachine = CounterSM_Idle;
 } /* end CounterSM_ScorePostTouched() */
 
 /*----------------------------------------------------------------------------*/
 void CounterSM_LoseLifePostTouched()
 {
   decrementLivesByOne();
-  u16GlobalCurrentSleepInterval = TIME_MAX;
-  CounterStateMachine = CounterSM_Sleep;
+  CounterStateMachine = CounterSM_Idle;
 }
  
 /*----------------------------------------------------------------------------*/
 void CounterSM_Idle()
 {
-  
-  
-  
-
-  CounterStateMachine = CounterSM_Sleep;
-  
+   
 } /* end CounterSM_Idle() */
 
 /*----------------------------------------------------------------------------*/
@@ -190,31 +173,19 @@ void CounterSM_ResetButtonPressed()
 {
   turnAllScoreLedsOff();
   turnAllLifeLedsOn();
-  CounterStateMachine = CounterSM_Sleep;
+  CounterStateMachine = CounterSM_Idle;
 }
 
 void CounterSM_TestState()
 {
-  while(1)
-  {
-    LedOn(LG_aLedInfoLifeLeds[2]);
-    if(isLedOn(LG_aLedInfoScoreLeds[0]))
-    {
-      LedOn(LG_aLedInfoScoreLeds[2]);
-      LedOff(LG_aLedInfoScoreLeds[3]);
-    }
-    else
-    {
-      LedOff(LG_aLedInfoScoreLeds[2]);
-      LedOn(LG_aLedInfoScoreLeds[3]);
-    }
-  }
+  turnAllScoreLedsOff();
+  turnAllLifeLedsOn();
 }
 
 void CounterSM_SpareButtonPressed()
 {
   manageSpareButtonPress();
-  CounterStateMachine = CounterSM_Sleep;
+  CounterStateMachine = CounterSM_Idle;
 }
 
 

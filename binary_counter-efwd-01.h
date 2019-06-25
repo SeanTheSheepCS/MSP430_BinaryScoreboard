@@ -49,7 +49,7 @@ Hardware Definitions
 #define P1_0_RGB_BLU             0x01
 #define P1_1_RGB_GRN             0x02
 #define P1_2_RGB_RED             0x04
-#define P1_3_BUTTON_0             0x08
+#define P1_3_BUTTON_0            0x08
 #define P1_4_                    0x10
 #define P1_5_                    0x20
 #define P1_6_                    0x40

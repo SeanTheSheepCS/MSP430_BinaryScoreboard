@@ -24,17 +24,23 @@
         <Counter1>0000000000000000000000000000000000000000000000000000000000000000</Counter1>
     </EEM_Cycle_Counter_1>
     <DebugChecksum>
-        <Checksum>2215645285</Checksum>
+        <Checksum>1863744955</Checksum>
     </DebugChecksum>
     <CallStack>
         <ShowArgs>0</ShowArgs>
     </CallStack>
+    <Disassembly>
+        <MixedMode>1</MixedMode>
+    </Disassembly>
     <TermIOLog>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
     </TermIOLog>
     <Breakpoints>
-        <Count>0</Count>
+        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.79.3" 0 0 0 0 "" 0 ""</Bp0>
+        <Bp1>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.81.5" 0 0 0 0 "" 0 ""</Bp1>
+        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.83.8" 0 0 0 0 "" 0 ""</Bp2>
+        <Count>3</Count>
     </Breakpoints>
     <FET>
         <Clock_mode>39</Clock_mode>
