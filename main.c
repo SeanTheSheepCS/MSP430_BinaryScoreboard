@@ -60,9 +60,6 @@ int main(void)
 __interrupt void Port2ISR(void)
 /* Handles waking up from low power mode via a button press and returns with processor awake */
 {
-  /* Debounce the pin for 10 ms -- not a great idea in an ISR but ok for a hack */
-  /* 120 / 12,000 = 10 ms */
-  for(u16 i = 0; i < 120; i++);
   
   /* If pin is still grounded, consider it valid */
   if( !(P2IN & P2_7_LOSELIFE) )
@@ -81,7 +78,7 @@ __interrupt void Port2ISR(void)
   //u8GlobalCurrentSleepInterval = SLEEP_TIME;
   //u8GlobalSleepCounter = 1;
   //TACTL = TIMERA_INT_DISABLE;
-  asm("BIC #0x0010,4(SP)"); 
+  asm("BIC #0x0010,0(SP)"); 
 } /* end Port1ISR */
 
 

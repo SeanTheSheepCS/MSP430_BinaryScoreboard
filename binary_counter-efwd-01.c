@@ -116,6 +116,12 @@ void CounterSM_Initialize()
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   
+  /* Allows interrupts on the pin */
+  P2IFG &= ~P2_6_SCORE;
+  P2IE |= P2_6_SCORE;
+  P2IFG &= ~P2_7_LOSELIFE;
+  P2IE |= P2_7_LOSELIFE;
+  
   P1DIR |= P1_0_RGB_BLU;
   P1DIR |= P1_1_RGB_GRN;
   P1DIR |= P1_2_RGB_RED;
@@ -166,6 +172,7 @@ void CounterSM_ScorePostTouched()
   if(!IsInputPinOnVoltageLow(SCORE_PIN))
   {
     G_fCounterStateMachine = CounterSM_Idle;
+    incrementScoreByOne();
   }
 } /* end CounterSM_ScorePostTouched() */
 
@@ -175,6 +182,7 @@ void CounterSM_LoseLifePostTouched()
   if(!IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
   {
     G_fCounterStateMachine = CounterSM_Idle;
+    decrementLivesByOne();
   }
 }
  
@@ -184,35 +192,10 @@ void CounterSM_Idle()
   if(IsButtonPressed(RESET_BUTTON))
   {
     G_fCounterStateMachine = CounterSM_ResetButtonPressed;
-    /* Debounce the button for 10 ms */
-    /* 120 / 12,000 = 10 ms */
-    for(u16 i = 0; i < 120; i++);
-    turnAllScoreLedsOff();
-    turnAllLifeLedsOn();
   }
   else if(IsButtonPressed(SPARE_BUTTON))
   {
     G_fCounterStateMachine = CounterSM_SpareButtonPressed;
-    /* Debounce the button for 10 ms */
-    /* 120 / 12,000 = 10 ms */
-    for(u16 i = 0; i < 120; i++);
-    manageSpareButtonPress();
-  }
-  else if(IsInputPinOnVoltageLow(SCORE_PIN))
-  {
-    G_fCounterStateMachine = CounterSM_ScorePostTouched;
-    /* Debounce the button for 10 ms */
-    /* 120 / 12,000 = 10 ms */
-    for(u16 i = 0; i < 120; i++);
-    incrementScoreByOne();
-  }
-  else if(IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
-  {
-    G_fCounterStateMachine = CounterSM_LoseLifePostTouched;
-    /* Debounce the button for 10 ms */
-    /* 120 / 12,000 = 10 ms */
-    for(u16 i = 0; i < 120; i++);
-    decrementLivesByOne();
   }
 } /* end CounterSM_Idle() */
 
@@ -238,15 +221,17 @@ void CounterSM_ResetButtonPressed()
   if(!IsButtonPressed(RESET_BUTTON))
   {
     G_fCounterStateMachine = CounterSM_Idle;
+    turnAllScoreLedsOff();
+    turnAllLifeLedsOn();
   }
 }
 
 void CounterSM_SpareButtonPressed()
 {
-  manageSpareButtonPress();
   if(!IsButtonPressed(SPARE_BUTTON))
   {
     G_fCounterStateMachine = CounterSM_Idle;
+    manageSpareButtonPress();
   }
 }
 
