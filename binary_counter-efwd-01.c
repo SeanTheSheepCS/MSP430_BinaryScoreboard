@@ -97,6 +97,15 @@ void gameOver()
 {
   G_fCounterStateMachine = CounterSM_GameOver;
 }
+
+void turnAllScoreLedsOn()
+{
+  for(int i = 0; i < LEDS_FOR_SCORE; i++)
+  {
+    LedOn(LG_aLedInfoScoreLeds[i]);
+  }
+}
+
   
 
 /****************************************************************************************
@@ -127,7 +136,10 @@ void CounterSM_Initialize()
   P3DIR &= ~P3_3_BUTTON_1;
   P3DIR |= P3_6_BUZZER;
   P3DIR |= P3_7_LED9;
-       
+  
+  turnAllScoreLedsOff();
+  turnAllLifeLedsOn();
+  
   G_fCounterStateMachine = CounterSM_Idle;
   
 } /* end CounterSM_Initialize */
@@ -135,8 +147,15 @@ void CounterSM_Initialize()
 /*----------------------------------------------------------------------------*/
 void CounterSM_GameOver()
 {
-  turnAllScoreLedsOff();
-  G_fCounterStateMachine = CounterSM_Idle;
+  if(IsButtonPressed(RESET_BUTTON))
+  {
+    G_fCounterStateMachine = CounterSM_ResetButtonPressed;
+    /* Debounce the button for 10 ms */
+    /* 120 / 12,000 = 10 ms */
+    for(u16 i = 0; i < 120; i++);
+    turnAllScoreLedsOff();
+    turnAllLifeLedsOn();
+  }
     
 } /* end CounterSM_GameOver() */
 
@@ -164,39 +183,36 @@ void CounterSM_Idle()
 {
   if(IsButtonPressed(RESET_BUTTON))
   {
+    G_fCounterStateMachine = CounterSM_ResetButtonPressed;
     /* Debounce the button for 10 ms */
     /* 120 / 12,000 = 10 ms */
     for(u16 i = 0; i < 120; i++);
     turnAllScoreLedsOff();
     turnAllLifeLedsOn();
-    G_fCounterStateMachine = CounterSM_ResetButtonPressed;
   }
-  
-  if(IsButtonPressed(SPARE_BUTTON))
+  else if(IsButtonPressed(SPARE_BUTTON))
   {
+    G_fCounterStateMachine = CounterSM_SpareButtonPressed;
     /* Debounce the button for 10 ms */
     /* 120 / 12,000 = 10 ms */
     for(u16 i = 0; i < 120; i++);
     manageSpareButtonPress();
-    G_fCounterStateMachine = CounterSM_SpareButtonPressed;
   }
-  
-  if(IsInputPinOnVoltageLow(SCORE_PIN))
+  else if(IsInputPinOnVoltageLow(SCORE_PIN))
   {
+    G_fCounterStateMachine = CounterSM_ScorePostTouched;
     /* Debounce the button for 10 ms */
     /* 120 / 12,000 = 10 ms */
     for(u16 i = 0; i < 120; i++);
     incrementScoreByOne();
-    G_fCounterStateMachine = CounterSM_ScorePostTouched;
   }
-  
-  if(IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
+  else if(IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
   {
+    G_fCounterStateMachine = CounterSM_LoseLifePostTouched;
     /* Debounce the button for 10 ms */
     /* 120 / 12,000 = 10 ms */
     for(u16 i = 0; i < 120; i++);
     decrementLivesByOne();
-    G_fCounterStateMachine = CounterSM_LoseLifePostTouched;
   }
 } /* end CounterSM_Idle() */
 
@@ -317,5 +333,4 @@ void incrementScoreByOne()
 void manageSpareButtonPress()
 {
   //The campers can put anything they want here!
-  turnAllLifeLedsOn();
 }

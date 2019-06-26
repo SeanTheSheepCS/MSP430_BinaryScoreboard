@@ -24,7 +24,7 @@
         <Counter1>0000000000000000000000000000000000000000000000000000000000000000</Counter1>
     </EEM_Cycle_Counter_1>
     <DebugChecksum>
-        <Checksum>3365050532</Checksum>
+        <Checksum>1078045888</Checksum>
     </DebugChecksum>
     <CallStack>
         <ShowArgs>0</ShowArgs>
@@ -33,13 +33,18 @@
         <MixedMode>1</MixedMode>
     </Disassembly>
     <Breakpoints>
-        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.228.3" 0 0 0 0 "" 0 ""</Bp0>
-        <Bp1>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.175.13" 1 0 0 0 "" 0 ""</Bp1>
-        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.181.5" 1 0 0 0 "" 0 ""</Bp2>
-        <Bp3>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.199.5" 1 0 0 0 "" 0 ""</Bp3>
-        <Bp4>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.190.5" 1 0 0 0 "" 0 ""</Bp4>
-        <Bp5>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.78.3" 1 0 0 0 "" 0 ""</Bp5>
-        <Count>6</Count>
+        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.292.5" 0 0 0 0 "" 0 ""</Bp0>
+        <Bp1>_ "STD_CODE" "{$PROJ_DIR$\..\main.c}.78.3" 0 0 0 0 "" 0 ""</Bp1>
+        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.98.3" 0 0 0 0 "" 0 ""</Bp2>
+        <Bp3>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.324.7" 0 0 0 0 "" 0 ""</Bp3>
+        <Bp4>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.240.5" 0 0 0 0 "" 0 ""</Bp4>
+        <Bp5>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.240.5" 0 0 0 0 "" 0 ""</Bp5>
+        <Bp6>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.190.5" 0 0 0 0 "" 0 ""</Bp6>
+        <Bp7>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.199.5" 0 0 0 0 "" 0 ""</Bp7>
+        <Bp8>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.215.5" 0 0 0 0 "" 0 ""</Bp8>
+        <Bp9>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.143.3" 0 0 0 0 "" 0 ""</Bp9>
+        <Bp10>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.207.5" 1 0 0 0 "" 0 ""</Bp10>
+        <Count>11</Count>
     </Breakpoints>
     <FET>
         <Clock_mode>39</Clock_mode>
