@@ -143,8 +143,8 @@ void CounterSM_Initialize()
   P3DIR |= P3_6_BUZZER;
   P3DIR |= P3_7_LED9;
   
-  turnAllScoreLedsOff();
   turnAllLifeLedsOn();
+  turnAllScoreLedsOff();
   
   G_fCounterStateMachine = CounterSM_Idle;
   

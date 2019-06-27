@@ -66,7 +66,7 @@ __interrupt void Port2ISR(void)
   {
     G_fCounterStateMachine = CounterSM_LoseLifePostTouched;
   }
-  else if( !(P2IN & P2_6_SCORE) )
+  if( (!(P2IN & P2_6_SCORE) && (G_fCounterStateMachine != CounterSM_GameOver)) )
   {
     G_fCounterStateMachine = CounterSM_ScorePostTouched;
   }
