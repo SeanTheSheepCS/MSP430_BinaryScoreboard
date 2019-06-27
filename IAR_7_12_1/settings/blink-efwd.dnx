@@ -24,7 +24,7 @@
         <Counter1>0000000000000000000000000000000000000000000000000000000000000000</Counter1>
     </EEM_Cycle_Counter_1>
     <DebugChecksum>
-        <Checksum>1031180169</Checksum>
+        <Checksum>463511780</Checksum>
     </DebugChecksum>
     <CallStack>
         <ShowArgs>0</ShowArgs>
@@ -33,13 +33,7 @@
         <MixedMode>1</MixedMode>
     </Disassembly>
     <Breakpoints>
-        <Bp0>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.98.3" 0 0 0 0 "" 0 ""</Bp0>
-        <Bp1>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.151.1" 0 0 0 0 "" 0 ""</Bp1>
-        <Bp2>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.175.5" 0 0 0 0 "" 0 ""</Bp2>
-        <Bp3>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.185.5" 0 0 0 0 "" 0 ""</Bp3>
-        <Bp4>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.279.1" 0 0 0 0 "" 0 ""</Bp4>
-        <Bp5>_ "STD_CODE" "{$PROJ_DIR$\..\binary_counter-efwd-01.c}.287.1" 0 0 0 0 "" 0 ""</Bp5>
-        <Count>6</Count>
+        <Count>0</Count>
     </Breakpoints>
     <FET>
         <Clock_mode>39</Clock_mode>

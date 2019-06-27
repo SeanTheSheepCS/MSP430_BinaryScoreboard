@@ -1,15 +1,7 @@
 /**********************************************************************
 File name:	main.c
 
-Main program file for Blinker 
-A simple program to sequentially blink an array of 8 LEDs, where 
-blinking pattern is selectable by button press.
-
-When complete, the following modes will be available:
-1. Off
-2. All LEDs on (this will stress the battery!)
-3. Random blinking
-4. Cyclical blink
+Main program file for binary counter 
 
 **********************************************************************/
 
@@ -20,6 +12,7 @@ When complete, the following modes will be available:
 YYYY-MM-DD  Checksum  Comments
 -------------------------------------------------------------------------------------------
 2009-04-08            First release. 
+2019-06-27            Updated for use with the binary counter
 
 ************************************************************************/
 
@@ -64,10 +57,16 @@ __interrupt void Port2ISR(void)
   /* If pin is still grounded, consider it valid */
   if( !(P2IN & P2_7_LOSELIFE) )
   {
+    /* Debounce the input for 1 ms, this is done to make sure the signal is stable before we start checking if it is low in the next state. */
+    /* 12 / 12,000 = 1 ms */
+    for(u16 i = 0; i < 12; i++);
     G_fCounterStateMachine = CounterSM_LoseLifePostTouched;
   }
   if( (!(P2IN & P2_6_SCORE) && (G_fCounterStateMachine != CounterSM_GameOver)) )
   {
+    /* Debounce the input for 1 ms, this is done to make sure the signal is stable before we start checking if it is low in the next state. */
+    /* 12 / 12,000 = 1 ms */
+    for(u16 i = 0; i < 12; i++);
     G_fCounterStateMachine = CounterSM_ScorePostTouched;
   }
  
@@ -75,21 +74,6 @@ __interrupt void Port2ISR(void)
   P2IFG &= ~P2_7_LOSELIFE;
   P2IFG &= ~P2_6_SCORE;
   
-  //u8GlobalCurrentSleepInterval = SLEEP_TIME;
-  //u8GlobalSleepCounter = 1;
-  //TACTL = TIMERA_INT_DISABLE;
   asm("BIC #0x0010,0(SP)"); 
-} /* end Port1ISR */
-
-
-/*----------------------------------------------------------------------------*/
-#pragma vector = TIMER0_A1_VECTOR
-__interrupt void TimerAISR(void)
-{
-/* Handles waking up from low power mode via TimerA expiration and returns with processor awake */
-  
-  //u8GlobalCurrentSleepInterval = SLEEP_TIME;
-  TACTL = TIMERA_INT_DISABLE;
-  asm("BIC #0x0010,0(SP)");
-} // end timer_wakeup_isr
+} /* end Port2ISR */
 

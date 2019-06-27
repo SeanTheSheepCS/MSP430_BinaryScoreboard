@@ -31,6 +31,7 @@ Constants
 
 #define LEDS_FOR_SCORE       (u8)6
 #define LEDS_FOR_LIVES       (u8)3
+#define NUMBER_OF_RGB_LEDS   (u8)1
 #define NUMBER_OF_BUTTONS    (u8)2
 #define NUMBER_OF_INPUT_PINS (u8)3
 

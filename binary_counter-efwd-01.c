@@ -51,6 +51,10 @@ LedInformation LG_aLedInfoLifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0029, P2_4_LED7},
 //This is so that the campers will have a simpler name to use
 #define lifeLeds LG_aLedInfoLifeLeds
 
+RGBLedInformation LG_aRGBLedInfoRGBLeds[NUMBER_OF_RGB_LEDS] = {{(u16*)0x0021, P1_1_RGB_RED,
+                                                                (u16*)0x0021, P1_2_RGB_GRN,
+                                                                (u16*)0x0021, P1_0_RGB_BLU}};
+
 ButtonInformation LG_aButtonInfoButtons[NUMBER_OF_BUTTONS] = {{(u16*)0x0020, P1_3_BUTTON_0},
                                                               {(u16*)0x0018, P3_3_BUTTON_1}};
 
@@ -116,33 +120,65 @@ void CounterSM_Initialize()
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   
+  P1DIR |= P1_0_RGB_BLU; //Sets the pin as an output
+  P1SEL2 &= ~P1_0_RGB_BLU; // This and the next line select the I/O function.
+  P1SEL &= ~P1_0_RGB_BLU; // This and the previous line select the I/O function.
+  P1DIR |= P1_1_RGB_GRN;
+  P1SEL2 &= ~P1_1_RGB_GRN; 
+  P1SEL &= ~P1_1_RGB_GRN; 
+  P1DIR |= P1_2_RGB_RED;
+  P1SEL2 &= ~P1_2_RGB_RED; 
+  P1SEL &= ~P1_2_RGB_RED; 
+  P1DIR &= ~P1_3_BUTTON_0; //Sets the pin as an input
+  P1SEL2 &= ~P1_3_BUTTON_0;
+  P1SEL &= ~P1_3_BUTTON_0;
+  
+  P2DIR |= P2_0_LED1;
+  P2SEL2 &= ~P2_0_LED1;
+  P2SEL &= ~P2_0_LED1;
+  P2DIR |= P2_1_LED2;
+  P2SEL2 &= ~P2_1_LED2;
+  P2SEL &= ~P2_1_LED2;
+  P2DIR |= P2_2_LED3;
+  P2SEL2 &= ~P2_2_LED3;
+  P2SEL &= ~P2_2_LED3;
+  P2DIR |= P2_3_LED8;
+  P2SEL2 &= ~P2_3_LED8;
+  P2SEL &= ~P2_3_LED8;
+  P2DIR |= P2_4_LED7;
+  P2SEL2 &= ~P2_4_LED7;
+  P2SEL &= ~P2_4_LED7;
+  P2DIR &= ~P2_5_SPARE;
+  P2SEL2 &= ~P2_5_SPARE;
+  P2SEL &= ~P2_5_SPARE;
+  P2DIR &= ~P2_6_SCORE;
+  P2SEL2 &= ~P2_6_SCORE;
+  P2SEL &= ~P2_6_SCORE;
+  P2DIR &= ~P2_7_LOSELIFE;
+  P2SEL2 &= ~P2_7_LOSELIFE;
+  P2SEL &= ~P2_7_LOSELIFE;
+  
+  //P3SEL2 is not set here since port 3 only has one select register
+  P3DIR |= P3_0_LED4;
+  P3SEL &= ~P3_0_LED4;
+  P3DIR |= P3_1_LED5;
+  P3SEL &= ~P3_1_LED5;
+  P3DIR |= P3_2_LED6;
+  P3SEL &= ~P3_2_LED6;
+  P3DIR &= ~P3_3_BUTTON_1;
+  P3SEL &= ~P3_3_BUTTON_1;
+  P3DIR |= P3_6_BUZZER;
+  P3SEL &= ~P3_6_BUZZER;
+  P3DIR |= P3_7_LED9;
+  P3SEL &= ~P3_7_LED9;
+  
   /* Allows interrupts on the pin */
   P2IFG &= ~P2_6_SCORE;
   P2IE |= P2_6_SCORE;
   P2IFG &= ~P2_7_LOSELIFE;
   P2IE |= P2_7_LOSELIFE;
   
-  P1DIR |= P1_0_RGB_BLU;
-  P1DIR |= P1_1_RGB_GRN;
-  P1DIR |= P1_2_RGB_RED;
-  P1DIR &= ~P1_3_BUTTON_0;
-  
-  P2DIR |= P2_0_LED1;
-  P2DIR |= P2_1_LED2;
-  P2DIR |= P2_2_LED3;
-  P2DIR |= P2_3_LED8;
-  P2DIR |= P2_4_LED7;
-  P2DIR &= ~P2_5_SPARE;
-  P2DIR &= ~P2_6_SCORE;
-  P2DIR &= ~P2_7_LOSELIFE;
-  
-  P3DIR |= P3_0_LED4;
-  P3DIR |= P3_1_LED5;
-  P3DIR |= P3_2_LED6;
-  P3DIR &= ~P3_3_BUTTON_1;
-  P3DIR |= P3_6_BUZZER;
-  P3DIR |= P3_7_LED9;
-  
+  // Set the initial state of the leds
   turnAllLifeLedsOn();
   turnAllScoreLedsOff();
   
