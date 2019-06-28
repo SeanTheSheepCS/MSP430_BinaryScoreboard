@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
     <fileVersion>2</fileVersion>
-    <fileChecksum>80841399</fileChecksum>
+    <fileChecksum>3364798528</fileChecksum>
     <configuration>
         <name>Debug</name>
         <outputs>
@@ -63,6 +63,11 @@
             <file>$PROJ_DIR$\Debug\Obj\input_pins.r43</file>
             <file>$PROJ_DIR$\Debug\Obj\input_pins.pbi</file>
             <file>$PROJ_DIR$\Debug\List\input_pins.lst</file>
+            <file>$PROJ_DIR$\..\rgb_leds.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\rgb_leds.r43</file>
+            <file>$PROJ_DIR$\Debug\Obj\rgb_leds.pbi</file>
+            <file>$PROJ_DIR$\Debug\List\rgb_leds.lst</file>
+            <file>$PROJ_DIR$\..\rgb_leds.c</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
@@ -92,11 +97,11 @@
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 26 18 42 13 1 11 9 3 6</file>
+                    <file> 26 18 42 13 1 11 9 58 3 6</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 18 11 42 3 13 1 9 6 26</file>
+                    <file> 18 6 11 42 58 13 1 9 3 26</file>
                 </tool>
             </inputs>
         </file>
@@ -237,7 +242,7 @@
             <inputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 32 46 53 47 55 16 27 37</file>
+                    <file> 32 46 53 47 55 16 27 59 37</file>
                 </tool>
             </inputs>
         </file>
@@ -310,6 +315,29 @@
                     <file> 50</file>
                 </tool>
             </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\rgb_leds.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 61 59</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 60</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 58 13 18 42</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 18 13 42 58</file>
+                </tool>
+            </inputs>
         </file>
     </configuration>
     <configuration>

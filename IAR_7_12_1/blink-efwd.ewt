@@ -2193,6 +2193,12 @@
         <name>$PROJ_DIR$\..\msp430x21x2.h</name>
     </file>
     <file>
+        <name>$PROJ_DIR$\..\rgb_leds.c</name>
+    </file>
+    <file>
+        <name>$PROJ_DIR$\..\rgb_leds.h</name>
+    </file>
+    <file>
         <name>$PROJ_DIR$\..\typedef_MSP430.h</name>
     </file>
 </project>

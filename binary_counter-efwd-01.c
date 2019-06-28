@@ -17,6 +17,7 @@ YYYY-MM-DD  Comments
 #include "binary_counter-efwd-01.h"
 #include "main.h"
 #include "leds.h"
+#include "rgb_leds.h"
 #include "buttons.h"
 #include "input_pins.h"
 
@@ -36,12 +37,12 @@ volatile u16 u16GlobalCurrentSleepInterval;           /* Duration that the devic
 /******************** Local Globals ************************/
 /* Global variable definitions intended only for the scope of this file */
 
-LedInformation LG_aLedInfoScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0029, P2_0_LED1},
-                                                       {(u16*)0x0029, P2_1_LED2},
-                                                       {(u16*)0x0029, P2_2_LED3},
-                                                       {(u16*)0x0019, P3_0_LED4},
+LedInformation LG_aLedInfoScoreLeds[LEDS_FOR_SCORE] = {{(u16*)0x0019, P3_2_LED6},
                                                        {(u16*)0x0019, P3_1_LED5},
-                                                       {(u16*)0x0019, P3_2_LED6}};
+                                                       {(u16*)0x0019, P3_0_LED4},
+                                                       {(u16*)0x0029, P2_2_LED3},
+                                                       {(u16*)0x0029, P2_1_LED2},
+                                                       {(u16*)0x0029, P2_0_LED1}};
 //This is so that the campers will have a simpler name to use
 #define scoreLeds LG_aLedInfoScoreLeds
 
@@ -51,9 +52,11 @@ LedInformation LG_aLedInfoLifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0029, P2_4_LED7},
 //This is so that the campers will have a simpler name to use
 #define lifeLeds LG_aLedInfoLifeLeds
 
-RGBLedInformation LG_aRGBLedInfoRGBLeds[NUMBER_OF_RGB_LEDS] = {{(u16*)0x0021, P1_1_RGB_RED,
-                                                                (u16*)0x0021, P1_2_RGB_GRN,
+RgbLedInformation LG_aRgbLedInfoRgbLeds[NUMBER_OF_RGB_LEDS] = {{(u16*)0x0021, P1_2_RGB_RED,
+                                                                (u16*)0x0021, P1_1_RGB_GRN,
                                                                 (u16*)0x0021, P1_0_RGB_BLU}};
+//This is so that the campers will have a simpler name to use
+#define DUAL_RGB_LEDS LG_aRgbLedInfoRgbLeds[0]
 
 ButtonInformation LG_aButtonInfoButtons[NUMBER_OF_BUTTONS] = {{(u16*)0x0020, P1_3_BUTTON_0},
                                                               {(u16*)0x0018, P3_3_BUTTON_1}};
@@ -207,8 +210,10 @@ void CounterSM_ScorePostTouched()
 {
   if(!IsInputPinOnVoltageLow(SCORE_PIN))
   {
+    RgbLedOnGreen(DUAL_RGB_LEDS);
     G_fCounterStateMachine = CounterSM_Idle;
     incrementScoreByOne();
+    //RgbLedOffGreen(DUAL_RGB_LEDS);
   }
 } /* end CounterSM_ScorePostTouched() */
 
