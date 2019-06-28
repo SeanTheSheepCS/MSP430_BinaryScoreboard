@@ -52,9 +52,9 @@ LedInformation LG_aLedInfoLifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0029, P2_4_LED7},
 //This is so that the campers will have a simpler name to use
 #define lifeLeds LG_aLedInfoLifeLeds
 
-RgbLedInformation LG_aRgbLedInfoRgbLeds[NUMBER_OF_RGB_LEDS] = {{(u16*)0x0021, P1_2_RGB_RED,
-                                                                (u16*)0x0021, P1_1_RGB_GRN,
-                                                                (u16*)0x0021, P1_0_RGB_BLU}};
+RgbLedInformation LG_aRgbLedInfoRgbLeds[NUMBER_OF_RGB_LEDS] = {{(u16*)0x0021, P1_0_RGB_RED, RGB_LED_ACTIVE_TYPE_LOW,
+                                                                (u16*)0x0021, P1_1_RGB_GRN, RGB_LED_ACTIVE_TYPE_LOW,
+                                                                (u16*)0x0021, P1_2_RGB_BLU, RGB_LED_ACTIVE_TYPE_LOW}};
 //This is so that the campers will have a simpler name to use
 #define DUAL_RGB_LEDS LG_aRgbLedInfoRgbLeds[0]
 
@@ -123,15 +123,15 @@ void CounterSM_Initialize()
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   
-  P1DIR |= P1_0_RGB_BLU; //Sets the pin as an output
-  P1SEL2 &= ~P1_0_RGB_BLU; // This and the next line select the I/O function.
-  P1SEL &= ~P1_0_RGB_BLU; // This and the previous line select the I/O function.
+  P1DIR |= P1_0_RGB_RED; //Sets the pin as an output
+  P1SEL2 &= ~P1_0_RGB_RED; // This and the next line select the I/O function.
+  P1SEL &= ~P1_0_RGB_RED; // This and the previous line select the I/O function.
   P1DIR |= P1_1_RGB_GRN;
   P1SEL2 &= ~P1_1_RGB_GRN; 
   P1SEL &= ~P1_1_RGB_GRN; 
-  P1DIR |= P1_2_RGB_RED;
-  P1SEL2 &= ~P1_2_RGB_RED; 
-  P1SEL &= ~P1_2_RGB_RED; 
+  P1DIR |= P1_2_RGB_BLU;
+  P1SEL2 &= ~P1_2_RGB_BLU; 
+  P1SEL &= ~P1_2_RGB_BLU; 
   P1DIR &= ~P1_3_BUTTON_0; //Sets the pin as an input
   P1SEL2 &= ~P1_3_BUTTON_0;
   P1SEL &= ~P1_3_BUTTON_0;
@@ -184,6 +184,9 @@ void CounterSM_Initialize()
   // Set the initial state of the leds
   turnAllLifeLedsOn();
   turnAllScoreLedsOff();
+  RgbLedOnBlue(DUAL_RGB_LEDS);
+  RgbLedOffRed(DUAL_RGB_LEDS);
+  RgbLedOffGreen(DUAL_RGB_LEDS);
   
   G_fCounterStateMachine = CounterSM_Idle;
   
@@ -210,10 +213,8 @@ void CounterSM_ScorePostTouched()
 {
   if(!IsInputPinOnVoltageLow(SCORE_PIN))
   {
-    RgbLedOnGreen(DUAL_RGB_LEDS);
     G_fCounterStateMachine = CounterSM_Idle;
     incrementScoreByOne();
-    //RgbLedOffGreen(DUAL_RGB_LEDS);
   }
 } /* end CounterSM_ScorePostTouched() */
 

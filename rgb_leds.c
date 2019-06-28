@@ -15,30 +15,72 @@ YYYY-MM-DD  Comments
 
 void RgbLedOnRed(RgbLedInformation RgbLedInfo)
 {
-  *(RgbLedInfo.u16pRedPinPortAddress) |= RgbLedInfo.u8RedPinLedIdentifier;
+  if(RgbLedInfo.acttypeRedPinActiveType == RGB_LED_ACTIVE_TYPE_HIGH)
+  {
+    *(RgbLedInfo.u16pRedPinPortAddress) |= RgbLedInfo.u8RedPinLedIdentifier; 
+  }
+  else if(RgbLedInfo.acttypeRedPinActiveType == RGB_LED_ACTIVE_TYPE_LOW)
+  {
+    *(RgbLedInfo.u16pRedPinPortAddress) &= ~RgbLedInfo.u8RedPinLedIdentifier;
+  }
 }
 
 void RgbLedOffRed(RgbLedInformation RgbLedInfo)
 {
-  *(RgbLedInfo.u16pRedPinPortAddress) &= ~RgbLedInfo.u8RedPinLedIdentifier;
+  if(RgbLedInfo.acttypeRedPinActiveType == RGB_LED_ACTIVE_TYPE_HIGH)
+  {
+    *(RgbLedInfo.u16pRedPinPortAddress) &= ~RgbLedInfo.u8RedPinLedIdentifier;
+  }
+  else if(RgbLedInfo.acttypeRedPinActiveType == RGB_LED_ACTIVE_TYPE_LOW)
+  {
+    *(RgbLedInfo.u16pRedPinPortAddress) |= RgbLedInfo.u8RedPinLedIdentifier; 
+  }
 }
 
 void RgbLedOnBlue(RgbLedInformation RgbLedInfo)
 {
-  *(RgbLedInfo.u16pBluePinPortAddress) |= RgbLedInfo.u8BluePinLedIdentifier;
+  if(RgbLedInfo.acttypeBluePinActiveType == RGB_LED_ACTIVE_TYPE_HIGH)
+  {
+    *(RgbLedInfo.u16pBluePinPortAddress) |= RgbLedInfo.u8BluePinLedIdentifier; 
+  }
+  else if(RgbLedInfo.acttypeBluePinActiveType == RGB_LED_ACTIVE_TYPE_LOW)
+  {
+    *(RgbLedInfo.u16pBluePinPortAddress) &= ~RgbLedInfo.u8BluePinLedIdentifier;
+  }
 }
 
 void RgbLedOffBlue(RgbLedInformation RgbLedInfo)
 {
-  *(RgbLedInfo.u16pBluePinPortAddress) &= ~RgbLedInfo.u8BluePinLedIdentifier;
+  if(RgbLedInfo.acttypeBluePinActiveType == RGB_LED_ACTIVE_TYPE_HIGH)
+  {
+    *(RgbLedInfo.u16pBluePinPortAddress) &= ~RgbLedInfo.u8BluePinLedIdentifier;
+  }
+  else if(RgbLedInfo.acttypeBluePinActiveType == RGB_LED_ACTIVE_TYPE_LOW)
+  {
+    *(RgbLedInfo.u16pBluePinPortAddress) |= RgbLedInfo.u8BluePinLedIdentifier; 
+  }
 }
 
 void RgbLedOnGreen(RgbLedInformation RgbLedInfo)
 {
-  *(RgbLedInfo.u16pGreenPinPortAddress) |= RgbLedInfo.u8GreenPinLedIdentifier;
+  if(RgbLedInfo.acttypeGreenPinActiveType == RGB_LED_ACTIVE_TYPE_HIGH)
+  {
+    *(RgbLedInfo.u16pGreenPinPortAddress) |= RgbLedInfo.u8GreenPinLedIdentifier; 
+  }
+  else if(RgbLedInfo.acttypeGreenPinActiveType == RGB_LED_ACTIVE_TYPE_LOW)
+  {
+    *(RgbLedInfo.u16pGreenPinPortAddress) &= ~RgbLedInfo.u8GreenPinLedIdentifier;
+  }
 }
 
 void RgbLedOffGreen(RgbLedInformation RgbLedInfo)
 {
-  *(RgbLedInfo.u16pGreenPinPortAddress) &= ~RgbLedInfo.u8GreenPinLedIdentifier;
+  if(RgbLedInfo.acttypeGreenPinActiveType == RGB_LED_ACTIVE_TYPE_HIGH)
+  {
+    *(RgbLedInfo.u16pGreenPinPortAddress) &= ~RgbLedInfo.u8GreenPinLedIdentifier;
+  }
+  else if(RgbLedInfo.acttypeGreenPinActiveType == RGB_LED_ACTIVE_TYPE_LOW)
+  {
+    *(RgbLedInfo.u16pGreenPinPortAddress) |= RgbLedInfo.u8GreenPinLedIdentifier; 
+  }
 }
