@@ -5,10 +5,10 @@
     <configuration>
         <name>Debug</name>
         <outputs>
-            <file>$PROJ_DIR$\Debug\Obj\rgb_leds.r43</file>
-            <file>$PROJ_DIR$\Debug\Obj\rgb_leds.pbi</file>
-            <file>$PROJ_DIR$\Debug\Obj\input_pins.pbi</file>
-            <file>$PROJ_DIR$\Debug\List\input_pins.lst</file>
+            <file>$PROJ_DIR$\Debug\Obj\leds.r43</file>
+            <file>$PROJ_DIR$\main.c</file>
+            <file>$PROJ_DIR$\Debug\Obj\blink-efwd-01.pbi</file>
+            <file>$PROJ_DIR$\Debug\List\rgb_leds.lst</file>
             <file>$PROJ_DIR$\..\binary_counter-efwd-01.c</file>
             <file>$PROJ_DIR$\..\binary_counter-efwd-01.h</file>
             <file>$PROJ_DIR$\..\buttons.c</file>
@@ -25,6 +25,10 @@
             <file>$PROJ_DIR$\..\rgb_leds.c</file>
             <file>$PROJ_DIR$\..\rgb_leds.h</file>
             <file>$PROJ_DIR$\..\typedef_MSP430.h</file>
+            <file>$PROJ_DIR$\Debug\Obj\rgb_leds.r43</file>
+            <file>$PROJ_DIR$\Debug\Obj\rgb_leds.pbi</file>
+            <file>$PROJ_DIR$\Debug\Obj\input_pins.pbi</file>
+            <file>$PROJ_DIR$\Debug\List\input_pins.lst</file>
             <file>$PROJ_DIR$\Debug\Obj\input_pins.r43</file>
             <file>$PROJ_DIR$\Debug\Obj\buttons.pbi</file>
             <file>$PROJ_DIR$\blink-efwd-01.c</file>
@@ -64,44 +68,59 @@
             <file>$PROJ_DIR$\Debug\Obj\binary_counter-efwd-01.pbi</file>
             <file>$PROJ_DIR$\Debug\Obj\blink-efwd-01.r43</file>
             <file>$PROJ_DIR$\Debug\List\blink-efwd-01.lst</file>
-            <file>$PROJ_DIR$\Debug\Obj\leds.r43</file>
-            <file>$PROJ_DIR$\main.c</file>
-            <file>$PROJ_DIR$\Debug\Obj\blink-efwd-01.pbi</file>
-            <file>$PROJ_DIR$\Debug\List\rgb_leds.lst</file>
         </outputs>
         <file>
             <name>[ROOT_NODE]</name>
             <outputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 53 26</file>
+                    <file> 57 30</file>
                 </tool>
                 <tool>
                     <name>ULP430</name>
-                    <file> 42</file>
+                    <file> 46</file>
                 </tool>
             </outputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 51 55</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 31</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 44 33 50 27 32 35</file>
+                </tool>
+            </inputs>
         </file>
         <file>
             <name>$PROJ_DIR$\..\binary_counter-efwd-01.c</name>
             <outputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 41 45</file>
+                    <file> 45 49</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 56</file>
+                    <file> 60</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 40 54 46 19 5 15 13 18 7 10</file>
+                    <file> 44 58 50 19 5 15 13 18 7 10</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 54 10 15 46 18 19 5 13 7 40</file>
+                    <file> 58 10 15 50 18 19 5 13 7 44</file>
                 </tool>
             </inputs>
         </file>
@@ -110,7 +129,114 @@
             <outputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 50 34</file>
+                    <file> 54 38</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 25</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 7 19 58 50</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 58 19 50 7</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\cstartup.s43</name>
+            <outputs>
+                <tool>
+                    <name>A430</name>
+                    <file> 53 52</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>A430</name>
+                    <file> 29 41 28 33</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\input_pins.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 23 24</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 22</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 10 19 58 50</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 58 19 50 10</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\leds.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 42 0</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 47</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 13 19 58 50</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 58 19 50 13</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\main.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 51 55</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 31</file>
+                </tool>
+            </outputs>
+            <inputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 44 58 50 19 15 5</file>
+                </tool>
+                <tool>
+                    <name>BICOMP</name>
+                    <file> 5 50 19 15 58 44</file>
+                </tool>
+            </inputs>
+        </file>
+        <file>
+            <name>$PROJ_DIR$\..\rgb_leds.c</name>
+            <outputs>
+                <tool>
+                    <name>ICC430</name>
+                    <file> 3 20</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -120,35 +246,20 @@
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 7 19 54 46</file>
+                    <file> 18 19 58 50</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 54 19 46 7</file>
+                    <file> 19 58 50 18</file>
                 </tool>
             </inputs>
         </file>
         <file>
-            <name>$PROJ_DIR$\..\cstartup.s43</name>
-            <outputs>
-                <tool>
-                    <name>A430</name>
-                    <file> 49 48</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>A430</name>
-                    <file> 25 37 24 29</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\input_pins.c</name>
+            <name>$PROJ_DIR$\blink-efwd-01.c</name>
             <outputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 3 20</file>
+                    <file> 62 61</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
@@ -158,99 +269,7 @@
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 10 19 54 46</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 54 19 46 10</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\leds.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 38 59</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 43</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 13 19 54 46</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 54 19 46 13</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\main.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 47 51</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 27</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 40 54 46 19 15 5</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 5 46 19 15 54 40</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\..\rgb_leds.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 62 0</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 1</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 18 19 54 46</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 19 54 46 18</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\blink-efwd-01.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 58 57</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 61</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 40 29 46 23 31 28</file>
+                    <file> 44 33 50 27 35 32</file>
                 </tool>
             </inputs>
         </file>
@@ -259,13 +278,13 @@
             <outputs>
                 <tool>
                     <name>A430</name>
-                    <file> 49 48</file>
+                    <file> 53 52</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>A430</name>
-                    <file> 25 37 24 29</file>
+                    <file> 29 41 28 33</file>
                 </tool>
             </inputs>
         </file>
@@ -274,11 +293,11 @@
             <outputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 39</file>
+                    <file> 43</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 30</file>
+                    <file> 34</file>
                 </tool>
             </outputs>
         </file>
@@ -287,13 +306,13 @@
             <outputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 26</file>
+                    <file> 30</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>XLINK</name>
-                    <file> 32 45 34 49 20 59 51 0 33</file>
+                    <file> 36 49 38 53 24 0 55 20 37</file>
                 </tool>
             </inputs>
         </file>
@@ -302,40 +321,21 @@
             <outputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 58 57</file>
+                    <file> 62 61</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 61</file>
+                    <file> 2</file>
                 </tool>
             </outputs>
             <inputs>
                 <tool>
                     <name>ICC430</name>
-                    <file> 40 54 46 19 52 15</file>
+                    <file> 44 58 50 19 56 15</file>
                 </tool>
                 <tool>
                     <name>BICOMP</name>
-                    <file> 15 46 19 52 54 40</file>
-                </tool>
-            </inputs>
-        </file>
-        <file>
-            <name>$PROJ_DIR$\main.c</name>
-            <outputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 47 51</file>
-                </tool>
-                <tool>
-                    <name>BICOMP</name>
-                    <file> 27</file>
-                </tool>
-            </outputs>
-            <inputs>
-                <tool>
-                    <name>ICC430</name>
-                    <file> 40 29 46 23 28 31</file>
+                    <file> 15 50 19 56 58 44</file>
                 </tool>
             </inputs>
         </file>

@@ -52,9 +52,9 @@ LedInformation LG_aLedInfoLifeLeds[LEDS_FOR_LIVES] = {{(u16*)0x0029, P2_4_LED7},
 //This is so that the campers will have a simpler name to use
 #define lifeLeds LG_aLedInfoLifeLeds
 
-RgbLedInformation LG_aRgbLedInfoRgbLeds[NUMBER_OF_RGB_LEDS] = {{(u16*)0x0021, P1_0_RGB_RED, RGB_LED_ACTIVE_TYPE_LOW,
+RgbLedInformation LG_aRgbLedInfoRgbLeds[NUMBER_OF_RGB_LEDS] = {{(u16*)0x0021, P1_2_RGB_RED, RGB_LED_ACTIVE_TYPE_LOW,
                                                                 (u16*)0x0021, P1_1_RGB_GRN, RGB_LED_ACTIVE_TYPE_LOW,
-                                                                (u16*)0x0021, P1_2_RGB_BLU, RGB_LED_ACTIVE_TYPE_LOW}};
+                                                                (u16*)0x0021, P1_0_RGB_BLU, RGB_LED_ACTIVE_TYPE_LOW}};
 //This is so that the campers will have a simpler name to use
 #define DUAL_RGB_LEDS LG_aRgbLedInfoRgbLeds[0]
 
@@ -74,7 +74,7 @@ InputPinInformation LG_aInputPinInfoInputPins[NUMBER_OF_INPUT_PINS] = {{(u16*)0x
 #define SCORE_PIN LG_aInputPinInfoInputPins[1]
 #define LOSE_LIFE_PIN LG_aInputPinInfoInputPins[2]
 
-u8  LG_u8ActiveIndex  = 0;
+bool  LG_bHasScoredSinceLastLifeLoss = FALSE;
 
 /*------------------------------------------------------------------------------
 Function: SetTimer
@@ -123,15 +123,15 @@ void CounterSM_Initialize()
   /* Reset key variables */
   u16GlobalCurrentSleepInterval = TIME_MAX;
   
-  P1DIR |= P1_0_RGB_RED; //Sets the pin as an output
-  P1SEL2 &= ~P1_0_RGB_RED; // This and the next line select the I/O function.
-  P1SEL &= ~P1_0_RGB_RED; // This and the previous line select the I/O function.
+  P1DIR |= P1_0_RGB_BLU; //Sets the pin as an output
+  P1SEL2 &= ~P1_0_RGB_BLU; // This and the next line select the I/O function.
+  P1SEL &= ~P1_0_RGB_BLU; // This and the previous line select the I/O function.
   P1DIR |= P1_1_RGB_GRN;
   P1SEL2 &= ~P1_1_RGB_GRN; 
   P1SEL &= ~P1_1_RGB_GRN; 
-  P1DIR |= P1_2_RGB_BLU;
-  P1SEL2 &= ~P1_2_RGB_BLU; 
-  P1SEL &= ~P1_2_RGB_BLU; 
+  P1DIR |= P1_2_RGB_RED;
+  P1SEL2 &= ~P1_2_RGB_RED; 
+  P1SEL &= ~P1_2_RGB_RED; 
   P1DIR &= ~P1_3_BUTTON_0; //Sets the pin as an input
   P1SEL2 &= ~P1_3_BUTTON_0;
   P1SEL &= ~P1_3_BUTTON_0;
@@ -183,8 +183,9 @@ void CounterSM_Initialize()
   
   // Set the initial state of the leds
   turnAllLifeLedsOn();
+  turnAllScoreLedsOn(); //So that the campers know when their turn all scoreLedsOff() function has worked.
   turnAllScoreLedsOff();
-  RgbLedOnBlue(DUAL_RGB_LEDS);
+  RgbLedOffBlue(DUAL_RGB_LEDS);
   RgbLedOffRed(DUAL_RGB_LEDS);
   RgbLedOffGreen(DUAL_RGB_LEDS);
   
@@ -195,8 +196,10 @@ void CounterSM_Initialize()
 /*----------------------------------------------------------------------------*/
 void CounterSM_GameOver()
 {
+  RgbLedOnRed(DUAL_RGB_LEDS);
   if(IsButtonPressed(RESET_BUTTON))
   {
+    RgbLedOffRed(DUAL_RGB_LEDS);
     G_fCounterStateMachine = CounterSM_ResetButtonPressed;
     /* Debounce the button for 10 ms */
     /* 120 / 12,000 = 10 ms */
@@ -211,9 +214,12 @@ void CounterSM_GameOver()
 /*----------------------------------------------------------------------------*/
 void CounterSM_ScorePostTouched()
 {
+  RgbLedOnBlue(DUAL_RGB_LEDS);
   if(!IsInputPinOnVoltageLow(SCORE_PIN))
   {
+    RgbLedOffBlue(DUAL_RGB_LEDS);
     G_fCounterStateMachine = CounterSM_Idle;
+    LG_bHasScoredSinceLastLifeLoss = TRUE;
     incrementScoreByOne();
   }
 } /* end CounterSM_ScorePostTouched() */
@@ -221,9 +227,14 @@ void CounterSM_ScorePostTouched()
 /*----------------------------------------------------------------------------*/
 void CounterSM_LoseLifePostTouched()
 {
-  if(!IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
+  if(!LG_bHasScoredSinceLastLifeLoss)
   {
     G_fCounterStateMachine = CounterSM_Idle;
+  }
+  else if(!IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
+  {
+    G_fCounterStateMachine = CounterSM_Idle;
+    LG_bHasScoredSinceLastLifeLoss = FALSE;
     decrementLivesByOne();
   }
 }
