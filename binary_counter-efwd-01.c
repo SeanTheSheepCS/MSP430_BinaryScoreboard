@@ -8,6 +8,7 @@ YYYY-MM-DD  Comments
 2013-09-14  First release.
 2019-06-05  Binary counter scoreboard first attempt
 2019-06-24  Pin assignments changed
+2019-07-03  Documentation done
 
 ************************************************************************/
 
@@ -100,11 +101,35 @@ void SetTimer(u16 usTaccr0_)
   
 } /* end SetTimer */
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: gameOver
+
+Description: switches the state of the counter to the game over state
+
+Requires:
+  - N/A
+
+Promises:
+  - switches the state of the counter to the game over state
+
+*/
 void gameOver()
 {
   G_fCounterStateMachine = CounterSM_GameOver;
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+Function: turnAllScoreLedsOn
+
+Description: turns all the score LEDS on
+
+Requires:
+  - N/A
+
+Promises:
+  - turns every LED in LG_aLedInfoScoreLeds on
+
+*/
 void turnAllScoreLedsOn()
 {
   for(int i = 0; i < LEDS_FOR_SCORE; i++)
@@ -118,6 +143,19 @@ void turnAllScoreLedsOn()
 /****************************************************************************************
 State Machine Functions
 ****************************************************************************************/
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_Initialize
+
+Description: Sets up the pins to be used, turns off all LEDS except the life LEDS which are turned on
+
+Requires:
+  - N/A
+
+Promises:
+  - All I/O pins are selected as the I/O function
+  - All output pins and input pins are set as such
+
+*/
 void CounterSM_Initialize()
 {
   /* Reset key variables */
@@ -193,7 +231,18 @@ void CounterSM_Initialize()
   
 } /* end CounterSM_Initialize */
 
-/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_GameOver
+
+Description: the state that the counter should go to if the player loses a life when they had none left
+
+Requires:
+  - N/A
+
+Promises:
+  - the DUAL_RGB_LEDS are turned red until the reset button is pressed
+
+*/
 void CounterSM_GameOver()
 {
   RgbLedOnRed(DUAL_RGB_LEDS);
@@ -211,8 +260,19 @@ void CounterSM_GameOver()
 } /* end CounterSM_GameOver() */
 
 
-/*----------------------------------------------------------------------------*/
-void CounterSM_ScorePostTouched()
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_ScorePostTouched
+
+Description: The state the counter should enter once the score post has been touched
+
+Requires:
+  - N/A
+
+Promises:
+  - DUAL_RGB_LEDS are turned blue until the ball stops touching the post
+  - When the ball stops touching the post, the score is incremented by one
+
+*/void CounterSM_ScorePostTouched()
 {
   RgbLedOnBlue(DUAL_RGB_LEDS);
   if(!IsInputPinOnVoltageLow(SCORE_PIN))
@@ -224,7 +284,18 @@ void CounterSM_ScorePostTouched()
   }
 } /* end CounterSM_ScorePostTouched() */
 
-/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_LoseLifePostTouched
+
+Description: The state the counter should enter once the lose life post has been touched
+
+Requires:
+  - N/A
+
+Promises:
+  - If you have lost a life since you last touched the lose life post, once the ball stops touching the post, you lose a life.
+
+*/
 void CounterSM_LoseLifePostTouched()
 {
   if(!LG_bHasScoredSinceLastLifeLoss)
@@ -237,10 +308,21 @@ void CounterSM_LoseLifePostTouched()
     LG_bHasScoredSinceLastLifeLoss = FALSE;
     decrementLivesByOne();
   }
-}
+} /* end CounterSM_LoseLifePostTouched() */
+
  
-/*----------------------------------------------------------------------------*/
-void CounterSM_Idle()
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_Idle
+
+Description: watches to see if the reset or spare button has been pressed and swaps the state accordingly
+
+Requires:
+  - N/A
+
+Promises:
+  - watches to see if the reset or spare button has been pressed and swaps the state accordingly
+
+*/void CounterSM_Idle()
 {
   if(IsButtonPressed(RESET_BUTTON))
   {
@@ -252,8 +334,18 @@ void CounterSM_Idle()
   }
 } /* end CounterSM_Idle() */
 
-/*----------------------------------------------------------------------------*/
-void CounterSM_Sleep()
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_Sleep
+
+Description: UNUSED
+
+Requires:
+  - UNUSED
+
+Promises:
+  - UNUSED
+
+*/void CounterSM_Sleep()
 {
   /* Update to the current sleep interval and re-enable the timer interrupt */
   SetTimer(u16GlobalCurrentSleepInterval);
@@ -269,6 +361,19 @@ void CounterSM_Sleep()
   }
 } /* end CounterSM_Sleep */
 
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_ResetButtonPressed
+
+Description: the state that the counter should enter once the reset button has been pressed
+
+Requires:
+  - N/A
+
+Promises:
+  - turns the score LEDs off once the button is no longer pressed down
+  - turns the life LEDs on once the button is no longer pressed down
+
+*/
 void CounterSM_ResetButtonPressed()
 {
   if(!IsButtonPressed(RESET_BUTTON))
@@ -279,6 +384,18 @@ void CounterSM_ResetButtonPressed()
   }
 }
 
+/*----------------------------------------------------------------------------------------------------------------------
+State: CounterSM_SpareButtonPressed
+
+Description: the state that the counter should enter once the spare button has been pressed
+
+Requires:
+  - N/A
+
+Promises:
+  - calls manageSpareButtonPress once the button is no longer pressed down
+
+*/
 void CounterSM_SpareButtonPressed()
 {
   if(!IsButtonPressed(SPARE_BUTTON))
