@@ -274,10 +274,10 @@ Promises:
 
 */void CounterSM_ScorePostTouched()
 {
-  RgbLedOnBlue(DUAL_RGB_LEDS);
+  RgbLedOnGreen(DUAL_RGB_LEDS);
   if(!IsInputPinOnVoltageLow(SCORE_PIN))
   {
-    RgbLedOffBlue(DUAL_RGB_LEDS);
+    RgbLedOffGreen(DUAL_RGB_LEDS);
     G_fCounterStateMachine = CounterSM_Idle;
     LG_bHasScoredSinceLastLifeLoss = TRUE;
     incrementScoreByOne();
@@ -302,11 +302,16 @@ void CounterSM_LoseLifePostTouched()
   {
     G_fCounterStateMachine = CounterSM_Idle;
   }
-  else if(!IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
+  else
   {
-    G_fCounterStateMachine = CounterSM_Idle;
-    LG_bHasScoredSinceLastLifeLoss = FALSE;
-    decrementLivesByOne();
+    RgbLedOnRed(DUAL_RGB_LEDS);
+    if(!IsInputPinOnVoltageLow(LOSE_LIFE_PIN))
+    {
+      RgbLedOffRed(DUAL_RGB_LEDS);
+      G_fCounterStateMachine = CounterSM_Idle;
+      LG_bHasScoredSinceLastLifeLoss = FALSE;
+      decrementLivesByOne();
+    }
   }
 } /* end CounterSM_LoseLifePostTouched() */
 
@@ -405,7 +410,13 @@ void CounterSM_SpareButtonPressed()
   }
 }
 
-
+void turnAllLifeLedsOff()
+{
+  for(int i = 0; i < LEDS_FOR_LIVES; i++)
+  {
+    LedOff(LG_aLedInfoLifeLeds[i]);
+  }
+}
 
 
 
@@ -488,4 +499,41 @@ void incrementScoreByOne()
 void manageSpareButtonPress()
 {
   //The campers can put anything they want here!
+  LedOn(LG_aLedInfoScoreLeds[0]);
+  RgbLedOnBlue(DUAL_RGB_LEDS);
+  turnAllLifeLedsOn();
+  for(int i = 0; i < 20; i++); //Waste time...
+  LedOn(LG_aLedInfoScoreLeds[1]);
+  LedOff(LG_aLedInfoScoreLeds[0]);
+  RgbLedOffBlue(DUAL_RGB_LEDS);
+  RgbLedOnRed(DUAL_RGB_LEDS);
+  turnAllLifeLedsOff();
+  for(int i = 0; i < 20; i++); //Waste time...
+  LedOn(LG_aLedInfoScoreLeds[2]);
+  LedOff(LG_aLedInfoScoreLeds[1]);
+  RgbLedOffRed(DUAL_RGB_LEDS);
+  RgbLedOnGreen(DUAL_RGB_LEDS);
+  turnAllLifeLedsOn();
+  for(int i = 0; i < 20; i++); //Waste time...
+  LedOn(LG_aLedInfoScoreLeds[3]);
+  LedOff(LG_aLedInfoScoreLeds[2]);
+  RgbLedOffGreen(DUAL_RGB_LEDS);
+  RgbLedOnBlue(DUAL_RGB_LEDS);
+  turnAllLifeLedsOff();
+  for(int i = 0; i < 20; i++); //Waste time...
+  LedOn(LG_aLedInfoScoreLeds[4]);
+  LedOff(LG_aLedInfoScoreLeds[3]);
+  RgbLedOffBlue(DUAL_RGB_LEDS);
+  RgbLedOnRed(DUAL_RGB_LEDS);
+  turnAllLifeLedsOn();
+  for(int i = 0; i < 20; i++); //Waste time...
+  LedOn(LG_aLedInfoScoreLeds[5]);
+  LedOff(LG_aLedInfoScoreLeds[4]);
+  RgbLedOffRed(DUAL_RGB_LEDS);
+  RgbLedOnGreen(DUAL_RGB_LEDS);
+  turnAllLifeLedsOff();
+  for(int i = 0; i < 20; i++); //Waste time...
+  LedOff(LG_aLedInfoScoreLeds[5]);
+  RgbLedOffGreen(DUAL_RGB_LEDS);
+  turnAllLifeLedsOn();
 }

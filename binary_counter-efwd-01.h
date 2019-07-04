@@ -113,6 +113,7 @@ void gameOver();
 /****************** Functions For The Campers To Fill **********************/
 void turnAllScoreLedsOff();
 void turnAllLifeLedsOn();
+void turnAllLifeLedsOff();
 void decrementLivesByOne();
 void incrementScoreByOne();
 void manageSpareButtonPress();
