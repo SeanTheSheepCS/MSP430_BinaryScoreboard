@@ -420,9 +420,7 @@ void CounterSM_SpareButtonPressed()
 
 /*-----------------------------------------------------------------------------
 
-HERE BEGINS THE CODE THAT THE CAMPERS WILL WRITE.
-The campers will implement each of these functions and then bring it to the leader to be inspected and run on the board.
-Solutions are provided here. The functions they will need to know about are as follows:
+HELLO CAMPERS! You will need these functions.
 
 -void LedOff(LedInformation LedInfo)                     This function turns off the LED you pass in as an argument
 -void LedOn(LedInformation LedInfo)                      This function turns on the LED you pass in as an argument
@@ -432,8 +430,8 @@ Solutions are provided here. The functions they will need to know about are as f
 
 They will also need to know about these two arrays:
 
--LedInformation LG_u8ScoreLeds[LEDS_FOR_SCORE]           This array contains the six LEDS used to keep track of score. The LED at index zero is the rightmost, the LED at index five is the leftmost.
--LedInformation LG_u8LifeLeds[LEDS_FOR_LIVES]             This array contains the three LEDS used to keep track of lives. The LED at index zero is the leftmost, the LED at index two is the rightmost.
+-LedInformation scoreLeds[6]           This array contains the six LEDS used to keep track of score. The LED at index zero is the rightmost, the LED at index five is the leftmost.
+-LedInformation sifeLeds[3]             This array contains the three LEDS used to keep track of lives. The LED at index zero is the leftmost, the LED at index two is the rightmost.
 
 -----------------------------------------------------------------------------*/
 
@@ -442,47 +440,22 @@ They will also need to know about these two arrays:
 
 void turnAllScoreLedsOff()
 {
-  for(int i = 0; i < LEDS_FOR_SCORE; i++)
-  {
-    LedOff(LG_aLedInfoScoreLeds[i]);
-  }
+  
 }
 
 void turnAllLifeLedsOn()
 {
-  for(int i = 0; i < LEDS_FOR_LIVES; i++)
-  {
-    LedOn(LG_aLedInfoLifeLeds[i]);
-  }
+  
 }
 
 void decrementLivesByOne()
 {
-  for(int i = 0; i < LEDS_FOR_LIVES; i++)
-  {
-    if(isLedOn(LG_aLedInfoLifeLeds[i]))
-    {
-      LedOff(LG_aLedInfoLifeLeds[i]);
-      return;
-    }
-  }
-  gameOver();
+  
 }
 
 void incrementScoreByOne()
 {
-  for(int i = 0; i < LEDS_FOR_SCORE; i++)
-  {
-    if(isLedOff(LG_aLedInfoScoreLeds[i]))
-    {
-      LedOn(LG_aLedInfoScoreLeds[i]);
-      return;
-    }
-    else
-    {
-      LedOff(LG_aLedInfoScoreLeds[i]);
-    }
-  }
+  
 }
 
 void manageSpareButtonPress()
